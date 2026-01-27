@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-pastel-white text-pastel-black;
+  @apply bg-soft-white text-primary-text;
 }
 
 @keyframes fadeInUp {
