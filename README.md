@@ -90,8 +90,7 @@ aztlan-2026/
 │   ├── components/
 │   │   └── RegistroForm.tsx    # Componente reutilizable del formulario
 │   ├── registro/
-│   │   ├── infantil/           # Página de registro infantil
-│   │   ├── juvenil/            # Página de registro juvenil
+│   │   ├── juvenil/            # Página de registro infantil y juvenil (6-17 años)
 │   │   ├── adultos/            # Página de registro adultos
 │   │   └── masters/            # Página de registro masters
 │   ├── globals.css             # Estilos globales
@@ -105,7 +104,7 @@ aztlan-2026/
 
 ## 🎯 Uso de la Aplicación
 
-1. **Página Principal**: Al acceder a la aplicación, verás una página con cuatro tarjetas correspondientes a las diferentes categorías de registro.
+1. **Página Principal**: Al acceder a la aplicación, verás una página con tres tarjetas: Registro Infantil y Juvenil, Adultos y Masters.
 
 2. **Selección de Categoría**: Haz clic en la tarjeta de la categoría que corresponda a tu edad:
    - **Infantil**: Para participantes menores de edad

@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from 'react'
 // Tipo base del registro (sin comprobanteAprobado)
 interface RegistroAztlan {
   id: string
-  tipoRegistro: 'infantil' | 'juvenil' | 'adultos' | 'masters'
+  tipoRegistro: 'juvenil' | 'adultos' | 'masters'
   nombreCompleto: string
   email: string
   timestamp: string
@@ -27,7 +27,7 @@ export interface UsuarioCompleto extends RegistroAztlan {
 const usuariosEjemplo: UsuarioCompleto[] = [
   {
     id: 'ejemplo_1',
-    tipoRegistro: 'infantil',
+    tipoRegistro: 'juvenil',
     nombreCompleto: 'María González López',
     email: 'maria.gonzalez@email.com',
     timestamp: new Date('2026-01-15T10:30:00').toISOString(),
@@ -92,7 +92,7 @@ const usuariosEjemplo: UsuarioCompleto[] = [
   },
   {
     id: 'ejemplo_6',
-    tipoRegistro: 'infantil',
+    tipoRegistro: 'juvenil',
     nombreCompleto: 'Diego Torres Jiménez',
     email: 'diego.torres@email.com',
     timestamp: new Date('2026-01-20T13:30:00').toISOString(),

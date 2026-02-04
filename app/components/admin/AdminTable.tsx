@@ -30,8 +30,7 @@ export default function AdminTable({ usuarios, onApprove, onDelete, onViewCompro
 
   const formatearTipoRegistro = (tipo: string) => {
     const tipos: Record<string, string> = {
-      infantil: 'Infantil',
-      juvenil: 'Juvenil',
+      juvenil: 'Infantil y Juvenil',
       adultos: 'Adultos',
       masters: 'Masters',
     }

@@ -10,8 +10,7 @@ import Modal from './components/Modal'
 import Footer from './components/Footer'
 
 const CARDS_DATA: { tipo: TipoRegistro; title: string; description: string }[] = [
-  { tipo: 'infantil', title: 'Registro Infantil', description: 'Para participantes menores de edad' },
-  { tipo: 'juvenil', title: 'Registro Juvenil', description: 'Para participantes jóvenes' },
+  { tipo: 'juvenil', title: 'Registro Infantil y Juvenil', description: 'Para participantes infantiles y juveniles (6-17 años)' },
   { tipo: 'adultos', title: 'Registro Adultos', description: 'Para participantes adultos' },
   { tipo: 'masters', title: 'Registro Masters', description: 'Para participantes masters' },
 ]

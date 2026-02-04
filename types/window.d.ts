@@ -2,7 +2,7 @@
 
 interface RegistroAztlan {
   id: string
-  tipoRegistro: 'infantil' | 'juvenil' | 'adultos' | 'masters'
+  tipoRegistro: 'juvenil' | 'adultos' | 'masters'
   nombreCompleto: string
   email: string
   timestamp: string

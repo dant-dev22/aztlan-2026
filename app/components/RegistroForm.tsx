@@ -2,7 +2,7 @@
 
 import { useState, FormEvent, useEffect, useRef } from 'react'
 
-export type TipoRegistro = 'infantil' | 'juvenil' | 'adultos' | 'masters'
+export type TipoRegistro = 'juvenil' | 'adultos' | 'masters'
 
 interface RegistroFormProps {
   tipoRegistro: TipoRegistro
@@ -51,7 +51,7 @@ export default function RegistroForm({
   descripcion,
   camposPersonalizados = {},
 }: RegistroFormProps) {
-  const esInfantilJuvenil = tipoRegistro === 'infantil' || tipoRegistro === 'juvenil'
+  const esInfantilJuvenil = tipoRegistro === 'juvenil'
   const esAdultosMasters = tipoRegistro === 'adultos' || tipoRegistro === 'masters'
 
   // Estado para pestañas de peso en adultos/masters

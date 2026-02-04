@@ -1,5 +1,11 @@
 import RegistroForm from '@/app/components/RegistroForm'
 import Link from 'next/link'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Registro Infantil y Juvenil - Aztlan 2026',
+  description: 'Registro de participantes infantiles y juveniles (6-17 años) para Aztlan 2026. Categorías por edad y peso.',
+}
 
 export default function RegistroJuvenil() {
   return (

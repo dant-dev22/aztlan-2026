@@ -4,8 +4,7 @@ import { useState } from 'react'
 import type { TipoRegistro } from './RegistroForm'
 
 const CARDS: { id: string; title: string; description: string; tipo: TipoRegistro }[] = [
-  { id: 'infantil', title: 'Registro Infantil', description: 'Para participantes menores de edad', tipo: 'infantil' },
-  { id: 'juvenil', title: 'Registro Juvenil', description: 'Para participantes jóvenes', tipo: 'juvenil' },
+  { id: 'juvenil', title: 'Registro Infantil y Juvenil', description: 'Para participantes infantiles y juveniles (6-17 años)', tipo: 'juvenil' },
   { id: 'adultos', title: 'Registro Adultos', description: 'Para participantes adultos', tipo: 'adultos' },
   { id: 'masters', title: 'Registro Masters', description: 'Para participantes masters', tipo: 'masters' },
 ]
@@ -35,7 +34,7 @@ export default function CardsRegistro({ onSelectCard, onVolver }: CardsRegistroP
           Volver
         </button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {CARDS.map((card, index) => (
           <button
             key={card.id}
