@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, FormEvent, useEffect, useRef } from 'react'
+import { postRegistro, type RegistroPayload } from '@/app/lib/api'
 
 export type TipoRegistro = 'juvenil' | 'adultos' | 'masters'
 
@@ -101,9 +102,9 @@ export default function RegistroForm({
     }))
   }
 
-  // Función para preparar los datos antes de enviarlos
-  const prepararDatosEnvio = () => {
-    const datosBase = {
+  // Función para preparar los datos antes de enviarlos (compatible con API Aztlan 26)
+  const prepararDatosEnvio = (): RegistroPayload => {
+    const datosBase: RegistroPayload = {
       tipoRegistro,
       nombreCompleto: formData.nombreCompleto,
       email: formData.email,
@@ -124,11 +125,11 @@ export default function RegistroForm({
     if (esAdultosMasters) {
       return {
         ...datosBase,
-        edad: parseInt(formData.edad),
+        edad: parseInt(formData.edad, 10),
         sexo: formData.sexo,
         nivelExperiencia: formData.nivelExperiencia,
         categoriaPeso: formData.categoriaPeso,
-        categoriaPesoTipo: pesoTab, // 'varonil' o 'femenil'
+        categoriaPesoTipo: pesoTab,
       }
     }
 
@@ -141,113 +142,18 @@ export default function RegistroForm({
     setSubmitStatus('idle')
 
     try {
-      // Preparar los datos del formulario
       const datosEnvio = prepararDatosEnvio()
+      const resultado = await postRegistro(datosEnvio)
 
-      // ============================================
-      // CÓDIGO PARA ENVIAR AL ENDPOINT (COMENTADO)
-      // ============================================
-      // 
-      // const ENDPOINT_URL = '/api/registro' // o la URL de tu endpoint
-      // 
-      // const response = await fetch(ENDPOINT_URL, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(datosEnvio),
-      // })
-      // 
-      // if (!response.ok) {
-      //   throw new Error(`Error en la respuesta: ${response.status}`)
-      // }
-      // 
-      // const resultado = await response.json()
-      // // La respuesta debe tener: nombreParticipante, mensaje, statusCode, aztlan_id
-      // console.log('Respuesta del servidor:', resultado)
-      // 
-      // // Guardar la respuesta del backend
-      // setRespuestaBackend({
-      //   nombreParticipante: resultado.nombreParticipante,
-      //   mensaje: resultado.mensaje,
-      //   statusCode: resultado.statusCode,
-      //   aztlan_id: resultado.aztlan_id,
-      // })
-      //
-      // ============================================
-      // ALTERNATIVA CON AXIOS (si prefieres usarlo):
-      // ============================================
-      // 
-      // import axios from 'axios'
-      // 
-      // const response = await axios.post(ENDPOINT_URL, datosEnvio, {
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      // })
-      // 
-      // // La respuesta debe tener: nombreParticipante, mensaje, statusCode, aztlan_id
-      // console.log('Respuesta del servidor:', response.data)
-      // 
-      // // Guardar la respuesta del backend
-      // setRespuestaBackend({
-      //   nombreParticipante: response.data.nombreParticipante,
-      //   mensaje: response.data.mensaje,
-      //   statusCode: response.status,
-      //   aztlan_id: response.data.aztlan_id,
-      // })
-      //
-      // ============================================
-
-      // Por ahora, guardar en window para testing
-      // Simulando respuesta del backend para testing
-      if (typeof window !== 'undefined') {
-        // Inicializar el objeto si no existe
-        if (!window.registrosAztlan) {
-          window.registrosAztlan = []
-        }
-
-        // Generar un aztlan_id simulado para testing
-        const aztlanIdSimulado = `AZT${Date.now()}${Math.random().toString(36).substr(2, 5).toUpperCase()}`
-
-        // Agregar el registro con un ID único
-        const registro = {
-          id: `reg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-          ...datosEnvio,
-        }
-
-        window.registrosAztlan.push(registro)
-
-        // También guardar en localStorage para persistencia
-        try {
-          const registrosLocalStorage = JSON.parse(
-            localStorage.getItem('registrosAztlan') || '[]'
-          )
-          registrosLocalStorage.push(registro)
-          localStorage.setItem('registrosAztlan', JSON.stringify(registrosLocalStorage))
-        } catch (localStorageError) {
-          console.warn('No se pudo guardar en localStorage:', localStorageError)
-        }
-
-        // Simular respuesta del backend para testing
-        setRespuestaBackend({
-          nombreParticipante: formData.nombreCompleto,
-          mensaje: 'Registro iniciado con éxito',
-          statusCode: 200,
-          aztlan_id: aztlanIdSimulado,
-        })
-
-        console.log('Registro guardado en window.registrosAztlan:', registro)
-        console.log('Total de registros:', window.registrosAztlan.length)
-        console.log('Para ver todos los registros, ejecuta: window.registrosAztlan')
-      }
-
-      // Simular un pequeño delay para mejor UX
-      await new Promise((resolve) => setTimeout(resolve, 500))
+      setRespuestaBackend({
+        nombreParticipante: resultado.nombreParticipante ?? formData.nombreCompleto,
+        mensaje: resultado.mensaje,
+        statusCode: resultado.statusCode ?? 200,
+        aztlan_id: resultado.aztlan_id,
+      })
 
       setSubmitStatus('success')
 
-      // Limpiar el formulario después de un éxito (pero mantener la respuesta del backend)
       setTimeout(() => {
         setFormData({
           nombreCompleto: '',
@@ -263,7 +169,6 @@ export default function RegistroForm({
         if (esAdultosMasters) {
           setPesoTab('varonil')
         }
-        // No limpiar respuestaBackend para que el usuario pueda ver su aztlan_id
       }, 2000)
     } catch (error) {
       console.error('Error al enviar formulario:', error)

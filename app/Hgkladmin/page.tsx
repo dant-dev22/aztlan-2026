@@ -7,7 +7,7 @@ import SearchBar from '@/app/components/admin/SearchBar'
 import type { UsuarioCompleto } from '@/app/hooks/useUsers'
 
 export default function AdminDashboard() {
-  const { usuarios, loading, eliminarUsuario, aprobarComprobante } = useUsers()
+  const { usuarios, loading, error, cargarUsuarios, eliminarUsuario, aprobarComprobante } = useUsers()
   const [searchQuery, setSearchQuery] = useState('')
 
   // Filtrar usuarios según la búsqueda
@@ -42,7 +42,7 @@ export default function AdminDashboard() {
     // TODO: Implementar cuando haya servidor
   }
 
-  if (loading) {
+  if (loading && usuarios.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-soft-white">
         <div className="text-center">
@@ -52,6 +52,23 @@ export default function AdminDashboard() {
             aria-label="Cargando"
           />
           <p className="text-secondary-text">Cargando dashboard...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error && usuarios.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-soft-white">
+        <div className="text-center max-w-md px-4">
+          <p className="text-red-600 font-medium mb-4">{error}</p>
+          <button
+            type="button"
+            onClick={() => cargarUsuarios()}
+            className="px-6 py-2 rounded-lg bg-charcoal-ink text-soft-white hover:bg-graphite transition-colors"
+          >
+            Reintentar
+          </button>
         </div>
       </div>
     )

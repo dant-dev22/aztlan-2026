@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import type { ComprobanteApiBody, ComprobanteApiResponse } from '@/types/window'
+import { postComprobante, type ComprobantePayload } from '@/app/lib/api'
 
 const MAX_SIZE_MB = 2
 const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024
@@ -26,7 +26,7 @@ function buildBody(
   aztlanId: string,
   imagen: File,
   imagenPreview: string
-): ComprobanteApiBody {
+): ComprobantePayload {
   const base64 = imagenPreview.replace(/^data:[^;]+;base64,/, '')
   return {
     aztlan_id: aztlanId.trim(),
@@ -34,16 +34,6 @@ function buildBody(
     comprobante_filename: imagen.name,
     comprobante_media_type: imagen.type,
     comprobante_size_bytes: imagen.size,
-    timestamp: new Date().toISOString(),
-  }
-}
-
-function simularEnvio(body: ComprobanteApiBody): ComprobanteApiResponse {
-  const ref = `REF-${Date.now().toString(36).toUpperCase()}`
-  return {
-    success: true,
-    message: `Comprobante recibido correctamente. Referencia: ${ref}. Espera la confirmación por correo.`,
-    referencia: ref,
     timestamp: new Date().toISOString(),
   }
 }
@@ -127,12 +117,12 @@ export default function FormTerminarRegistro({ onClose }: FormTerminarRegistroPr
     setEnviando(true)
     try {
       const body = buildBody(aztlanId, imagen, imagenPreview)
-      const response = simularEnvio(body)
-      await new Promise((r) => setTimeout(r, 1500))
-
-      window.comprobanteEnviadoTest = { body, response }
+      const response = await postComprobante(body)
       setMensajeExito(response.message)
       setEnviado(true)
+    } catch (err) {
+      console.error('Error al enviar comprobante:', err)
+      setErrorValidacion(err instanceof Error ? err.message : 'Error al enviar el comprobante.')
     } finally {
       setEnviando(false)
     }
