@@ -6,9 +6,26 @@ import AdminTable from '@/app/components/admin/AdminTable'
 import SearchBar from '@/app/components/admin/SearchBar'
 import type { UsuarioCompleto } from '@/app/hooks/useUsers'
 
+const ADMIN_USER = 'admin'
+const ADMIN_PASSWORD = 'x7k2'
+
 export default function AdminDashboard() {
   const { usuarios, loading, error, cargarUsuarios, eliminarUsuario, aprobarComprobante } = useUsers()
   const [searchQuery, setSearchQuery] = useState('')
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [loginUser, setLoginUser] = useState('')
+  const [loginPassword, setLoginPassword] = useState('')
+  const [loginError, setLoginError] = useState('')
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoginError('')
+    if (loginUser === ADMIN_USER && loginPassword === ADMIN_PASSWORD) {
+      setIsAuthenticated(true)
+    } else {
+      setLoginError('Usuario o contraseña incorrectos.')
+    }
+  }
 
   // Filtrar usuarios según la búsqueda
   const usuariosFiltrados = useMemo(() => {
@@ -40,6 +57,58 @@ export default function AdminDashboard() {
     // Por ahora no hacemos nada con la imagen, como indicó el usuario
     console.log('Ver comprobante para usuario:', id)
     // TODO: Implementar cuando haya servidor
+  }
+
+  // Popup de login: mostrar hasta que se autentique
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-charcoal-ink/90 p-4">
+        <div className="w-full max-w-sm bg-soft-white rounded-2xl shadow-2xl p-8 animate-fade-in">
+          <h2 className="text-xl font-bold text-primary-text mb-6 text-center">
+            Acceso de administración
+          </h2>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label htmlFor="admin-user" className="block text-sm font-medium text-primary-text mb-1">
+                Usuario
+              </label>
+              <input
+                id="admin-user"
+                type="text"
+                value={loginUser}
+                onChange={(e) => setLoginUser(e.target.value)}
+                className="w-full px-4 py-2 rounded-lg border-2 border-graphite focus:border-charcoal-ink focus:outline-none text-primary-text"
+                placeholder="Usuario"
+                autoComplete="username"
+              />
+            </div>
+            <div>
+              <label htmlFor="admin-password" className="block text-sm font-medium text-primary-text mb-1">
+                Contraseña
+              </label>
+              <input
+                id="admin-password"
+                type="password"
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+                className="w-full px-4 py-2 rounded-lg border-2 border-graphite focus:border-charcoal-ink focus:outline-none text-primary-text"
+                placeholder="Contraseña"
+                autoComplete="current-password"
+              />
+            </div>
+            {loginError && (
+              <p className="text-sm text-red-600 font-medium">{loginError}</p>
+            )}
+            <button
+              type="submit"
+              className="w-full py-3 rounded-lg bg-charcoal-ink text-soft-white font-semibold hover:bg-graphite transition-colors"
+            >
+              Entrar
+            </button>
+          </form>
+        </div>
+      </div>
+    )
   }
 
   if (loading && usuarios.length === 0) {

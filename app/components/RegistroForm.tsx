@@ -517,8 +517,8 @@ export default function RegistroForm({
           {/* Mensajes de estado */}
           {submitStatus === 'success' && respuestaBackend && (
             <div ref={successMessageRef} className="flex justify-center items-center my-8">
-              <div className="w-full max-w-lg bg-orange-500 text-white px-8 py-6 rounded-2xl shadow-2xl text-center animate-fade-in border-4 border-orange-600 transform scale-105">
-                <div className="flex items-center justify-center mb-4">
+              <div className="w-full max-w-lg bg-white text-primary-text px-8 py-6 rounded-2xl shadow-2xl text-center animate-fade-in border-2 border-graphite/30">
+                <div className="flex items-center justify-center mb-4 text-orange-500">
                   <svg
                     className="w-12 h-12"
                     fill="none"
@@ -534,19 +534,19 @@ export default function RegistroForm({
                     />
                   </svg>
                 </div>
-                <p className="text-2xl font-bold mb-3">
+                <p className="text-2xl font-bold mb-3 text-primary-text">
                   ¡Felicidades {respuestaBackend.nombreParticipante}!
                 </p>
-                <p className="text-lg mb-4 opacity-95">
+                <p className="text-lg mb-4 text-secondary-text">
                   Tu registro ha sido comenzado con éxito!
                 </p>
-                <div className="bg-orange-600/50 rounded-lg px-4 py-3 mb-3">
-                  <p className="text-sm font-medium mb-1 opacity-90">Este es tu Aztlan ID:</p>
-                  <p className="text-2xl font-bold tracking-wider font-mono">
+                <div className="bg-orange-50 border-2 border-orange-400 rounded-xl px-4 py-3 mb-3">
+                  <p className="text-sm font-medium mb-1 text-secondary-text">Este es tu Aztlan ID:</p>
+                  <p className="text-2xl font-bold tracking-wider font-mono text-orange-600">
                     {respuestaBackend.aztlan_id}
                   </p>
                 </div>
-                <p className="text-base font-semibold">
+                <p className="text-base font-semibold text-primary-text">
                   Consérvalo para terminar tu registro
                 </p>
               </div>
