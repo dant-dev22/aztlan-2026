@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react'
 import { useUsers } from '@/app/hooks/useUsers'
 import AdminTable from '@/app/components/admin/AdminTable'
 import SearchBar from '@/app/components/admin/SearchBar'
+import DownloadReportButton from '@/app/components/admin/DownloadReportButton'
 import type { UsuarioCompleto } from '@/app/hooks/useUsers'
 
 const ADMIN_USER = 'admin'
@@ -178,9 +179,12 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          {/* Buscador */}
-          <div className="mb-6">
-            <SearchBar onSearch={handleSearch} />
+          {/* Buscador y descarga de reporte */}
+          <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex-1 min-w-0">
+              <SearchBar onSearch={handleSearch} />
+            </div>
+            <DownloadReportButton usuarios={usuarios} />
           </div>
 
           {/* Tabla de usuarios */}
