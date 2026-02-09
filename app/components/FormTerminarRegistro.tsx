@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { postComprobante, type ComprobantePayload } from '@/app/lib/api'
+import AppLogo from './AppLogo'
 
 const MAX_SIZE_MB = 2
 const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024
@@ -171,12 +172,15 @@ export default function FormTerminarRegistro({ onClose, aztlanIdPrellenado }: Fo
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <h2 className="text-xl sm:text-2xl font-bold text-primary-text flex items-center gap-2">
-        <svg className="w-6 h-6 text-charcoal-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-        Terminar registro
-      </h2>
+      <div className="flex flex-col items-center mb-4">
+        <AppLogo size={120} className="mb-3" />
+        <h2 className="text-xl sm:text-2xl font-bold text-primary-text flex items-center gap-2">
+          <svg className="w-6 h-6 text-charcoal-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          Terminar registro
+        </h2>
+      </div>
 
       <div>
         <label htmlFor="aztlan-id" className="block text-sm font-medium text-primary-text mb-2">

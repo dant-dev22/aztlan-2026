@@ -2,6 +2,7 @@
 
 import { useState, FormEvent, useEffect, useRef } from 'react'
 import { postRegistro, type RegistroPayload } from '@/app/lib/api'
+import AppLogo from './AppLogo'
 
 export type TipoRegistro = 'juvenil' | 'adultos' | 'masters'
 
@@ -197,7 +198,8 @@ export default function RegistroForm({
   return (
     <div className="w-full">
       <div className="bg-warm-white rounded-2xl shadow-lg p-6 sm:p-8 lg:p-10">
-        <div className="mb-8 text-center">
+        <div className="mb-8 flex flex-col items-center text-center">
+          <AppLogo size={120} className="mb-4" />
           <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-primary-text">
             {tituloDefault}
           </h1>

@@ -1,21 +1,10 @@
 import RegistroForm from '@/app/components/RegistroForm'
-import Link from 'next/link'
+import Header from '@/app/components/Header'
 
 export default function RegistroMasters() {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="bg-charcoal-ink text-soft-white py-6 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <h1 className="text-2xl sm:text-3xl font-bold">Aztlan 2026</h1>
-          <Link
-            href="/"
-            className="text-sm sm:text-base hover:text-silver-fog transition-colors duration-300"
-          >
-            ← Volver
-          </Link>
-        </div>
-      </header>
+      <Header showBackButton backHref="/" />
 
       {/* Main */}
       <main className="flex-1 py-8 px-4 sm:px-6 lg:px-8">

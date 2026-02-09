@@ -1,5 +1,7 @@
 'use client'
 
+import AppLogo from './AppLogo'
+
 interface ModalExitoRegistroProps {
   nombreParticipante: string
   aztlanId: string
@@ -15,6 +17,7 @@ export default function ModalExitoRegistro({
 }: ModalExitoRegistroProps) {
   return (
     <div className="flex flex-col items-center text-center animate-fade-in" role="status" aria-live="polite">
+      <AppLogo size={80} className="mb-4" />
       {/* Icono de éxito */}
       <div className="flex items-center justify-center mb-6 text-orange-500">
         <svg

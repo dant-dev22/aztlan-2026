@@ -9,6 +9,7 @@ import FormTerminarRegistro from './components/FormTerminarRegistro'
 import ModalExitoRegistro from './components/ModalExitoRegistro'
 import Modal from './components/Modal'
 import Footer from './components/Footer'
+import Header from './components/Header'
 
 const CARDS_DATA: { tipo: TipoRegistro; title: string; description: string }[] = [
   { tipo: 'juvenil', title: 'Registro Infantil y Juvenil', description: 'Para participantes infantiles y juveniles (6-17 años)' },
@@ -59,13 +60,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-charcoal-ink text-soft-white py-6 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center">
-            Aztlan 2026
-          </h1>
-        </div>
-      </header>
+      <Header />
 
       <main className="flex-1 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
