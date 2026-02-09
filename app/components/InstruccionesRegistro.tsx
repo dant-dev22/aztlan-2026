@@ -8,7 +8,7 @@ const pasos = [
     titulo: 'Inicia tu registro',
     esEnlaceScroll: true,
     texto:
-      'Cuando termines, tendrás un Aztlan ID. Guárdalo muy bien.',
+      'Cuando termines, tendrás un Aztlan ID. El número se mostrará en pantalla justo al finalizar tu registro. Guárdalo muy bien.',
     icono: (
       <svg className="w-6 h-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -32,7 +32,7 @@ const pasos = [
     titulo: 'Espera la confirmación',
     esEnlaceScroll: false,
     texto:
-      'Recibirás un mensaje por WhatsApp confirmando que tu pago ha sido recibido y que tu registro ha sido completado.',
+      'Recibirás un correo confirmando que tu pago ha sido recibido y que tu registro ha sido completado.',
     icono: (
       <svg className="w-6 h-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
