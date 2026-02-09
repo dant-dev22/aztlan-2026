@@ -1,10 +1,10 @@
 /**
  * Cliente API Aztlan 26
- * Base URL: http://76.13.126.149:5000
- * Documentación: http://76.13.126.149:5000/apidocs/
+ * En producción usar NEXT_PUBLIC_API_URL=/api (proxy nginx).
+ * Documentación (dev): http://76.13.126.149:5000/apidocs/
  */
 
-const BASE_URL = 'http://76.13.126.149:5000'
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://76.13.126.149:5000'
 
 export type TipoRegistro = 'juvenil' | 'adultos' | 'masters'
 
