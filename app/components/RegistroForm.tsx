@@ -43,7 +43,7 @@ const nivelesExperienciaInfantilJuvenil = [
 // Opciones para Adultos y Masters
 const nivelesExperienciaAdultosMasters = ['Principiante', 'Intermedio', 'Avanzado']
 
-const categoriasPesoVaronil = ['-65', '-73', '-79', '-85', '-91', '-100', '+100']
+const categoriasPesoVaronil = ['-60', '-65', '-73', '-79', '-85', '-91', '-100', '+100']
 const categoriasPesoFemenil = ['-50', '-55', '-60', '-65', '-70', '+70']
 
 export default function RegistroForm({
