@@ -125,12 +125,12 @@ aztlan-2026/
 
 ### Variables de Entorno
 
-Si necesitas configurar variables de entorno, crea un archivo `.env.local` en la raíz del proyecto:
-
-```env
-# Ejemplo de variables de entorno
-NEXT_PUBLIC_API_URL=http://localhost:3000/api
-```
+- **Desarrollo**: crea `.env.local` con `NEXT_PUBLIC_API_URL` (y opcionalmente `ADMIN_USER`, `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET` para probar `/admin`).
+- **Producción**: en el VPS usa `.env.production` (o las variables de entorno del proceso). Necesarias:
+  - `NEXT_PUBLIC_API_URL=/api`
+  - `ADMIN_USER=aztlanmaster`
+  - `ADMIN_PASSWORD=` (contraseña segura; no commitear)
+  - `ADMIN_SESSION_SECRET=` (mín. 16 caracteres; generar con `openssl rand -hex 32`)
 
 ## 📄 Licencia
 
