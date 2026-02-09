@@ -10,6 +10,7 @@ interface RegistroFormProps {
   titulo?: string
   descripcion?: string
   camposPersonalizados?: Record<string, any>
+  onRegistroExitoso?: (nombreParticipante: string, aztlanId: string) => void
 }
 
 // Opciones para Infantil y Juvenil
@@ -51,6 +52,7 @@ export default function RegistroForm({
   titulo,
   descripcion,
   camposPersonalizados = {},
+  onRegistroExitoso,
 }: RegistroFormProps) {
   const esInfantilJuvenil = tipoRegistro === 'juvenil'
   const esAdultosMasters = tipoRegistro === 'adultos' || tipoRegistro === 'masters'
@@ -145,14 +147,22 @@ export default function RegistroForm({
       const datosEnvio = prepararDatosEnvio()
       const resultado = await postRegistro(datosEnvio)
 
+      const nombreParticipante = resultado.nombreParticipante ?? formData.nombreCompleto
+      const aztlanId = resultado.aztlan_id
+
       setRespuestaBackend({
-        nombreParticipante: resultado.nombreParticipante ?? formData.nombreCompleto,
+        nombreParticipante,
         mensaje: resultado.mensaje,
         statusCode: resultado.statusCode ?? 200,
-        aztlan_id: resultado.aztlan_id,
+        aztlan_id: aztlanId,
       })
 
       setSubmitStatus('success')
+
+      // Si hay callback, llamarlo para abrir el modal
+      if (onRegistroExitoso) {
+        onRegistroExitoso(nombreParticipante, aztlanId)
+      }
 
       setTimeout(() => {
         setFormData({
@@ -514,8 +524,8 @@ export default function RegistroForm({
             </button>
           </div>
 
-          {/* Mensajes de estado */}
-          {submitStatus === 'success' && respuestaBackend && (
+          {/* Mensajes de estado - Solo mostrar si no hay callback para modal */}
+          {submitStatus === 'success' && respuestaBackend && !onRegistroExitoso && (
             <div ref={successMessageRef} className="flex justify-center items-center my-8">
               <div className="w-full max-w-lg bg-white text-primary-text px-8 py-6 rounded-2xl shadow-2xl text-center animate-fade-in border-2 border-graphite/30">
                 <div className="flex items-center justify-center mb-4 text-orange-500">

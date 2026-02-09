@@ -6,6 +6,7 @@ import InstruccionesRegistro from './components/InstruccionesRegistro'
 import BotonesFlujoPrincipal from './components/BotonesFlujoPrincipal'
 import CardsRegistro from './components/CardsRegistro'
 import FormTerminarRegistro from './components/FormTerminarRegistro'
+import ModalExitoRegistro from './components/ModalExitoRegistro'
 import Modal from './components/Modal'
 import Footer from './components/Footer'
 
@@ -21,13 +22,16 @@ export default function Home() {
   const [vista, setVista] = useState<Vista>('principal')
   const [modalRegistro, setModalRegistro] = useState<TipoRegistro | null>(null)
   const [modalTerminar, setModalTerminar] = useState(false)
+  const [modalExito, setModalExito] = useState<{ nombreParticipante: string; aztlanId: string } | null>(null)
+  const [aztlanIdGuardado, setAztlanIdGuardado] = useState<string | null>(null)
 
-  const cualquierModalAbierto = Boolean(modalRegistro || modalTerminar)
+  const cualquierModalAbierto = Boolean(modalRegistro || modalTerminar || modalExito)
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return
       if (modalTerminar) setModalTerminar(false)
+      else if (modalExito) setModalExito(null)
       else if (modalRegistro) setModalRegistro(null)
     }
     if (cualquierModalAbierto) {
@@ -38,7 +42,18 @@ export default function Home() {
       document.removeEventListener('keydown', handleEscape)
       document.body.style.overflow = 'unset'
     }
-  }, [cualquierModalAbierto, modalRegistro, modalTerminar])
+  }, [cualquierModalAbierto, modalRegistro, modalTerminar, modalExito])
+
+  const handleRegistroExitoso = (nombreParticipante: string, aztlanId: string) => {
+    setModalRegistro(null) // Cerrar el modal de registro
+    setAztlanIdGuardado(aztlanId) // Guardar el Aztlan ID
+    setModalExito({ nombreParticipante, aztlanId }) // Abrir el modal de éxito
+  }
+
+  const handleSubirComprobante = () => {
+    setModalExito(null) // Cerrar el modal de éxito
+    setModalTerminar(true) // Abrir el modal de terminar registro
+  }
 
   const cardSeleccionada = CARDS_DATA.find((c) => c.tipo === modalRegistro)
 
@@ -90,11 +105,26 @@ export default function Home() {
           tipoRegistro={modalRegistro!}
           titulo={cardSeleccionada?.title}
           descripcion={cardSeleccionada?.description}
+          onRegistroExitoso={handleRegistroExitoso}
         />
       </Modal>
 
+      <Modal isOpen={Boolean(modalExito)} onClose={() => setModalExito(null)} showCloseButton={false}>
+        {modalExito && (
+          <ModalExitoRegistro
+            nombreParticipante={modalExito.nombreParticipante}
+            aztlanId={modalExito.aztlanId}
+            onSubirComprobante={handleSubirComprobante}
+            onClose={() => setModalExito(null)}
+          />
+        )}
+      </Modal>
+
       <Modal isOpen={modalTerminar} onClose={() => setModalTerminar(false)}>
-        <FormTerminarRegistro onClose={() => setModalTerminar(false)} />
+        <FormTerminarRegistro
+          onClose={() => setModalTerminar(false)}
+          aztlanIdPrellenado={aztlanIdGuardado || undefined}
+        />
       </Modal>
     </div>
   )

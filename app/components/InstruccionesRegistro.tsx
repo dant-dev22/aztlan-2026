@@ -20,7 +20,7 @@ const pasos = [
     titulo: 'Haz tu transferencia',
     esEnlaceScroll: false,
     texto:
-      'Transfiere a la cuenta indicada (Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.) y envía el comprobante dando clic en "Terminar registro".',
+      'Transfiere a la cuenta BBVA 4152 3139 2334 3144 a nombre de Cristhian Bautista y envía el comprobante dando clic en "Terminar registro".',
     icono: (
       <svg className="w-6 h-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />

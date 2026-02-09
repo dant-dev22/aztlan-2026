@@ -11,6 +11,7 @@ const AZTLAN_ID_MAX = 64
 
 interface FormTerminarRegistroProps {
   onClose: () => void
+  aztlanIdPrellenado?: string
 }
 
 function validarAztlanId(val: string): string | null {
@@ -38,9 +39,9 @@ function buildBody(
   }
 }
 
-export default function FormTerminarRegistro({ onClose }: FormTerminarRegistroProps) {
+export default function FormTerminarRegistro({ onClose, aztlanIdPrellenado }: FormTerminarRegistroProps) {
   const [pageLoading, setPageLoading] = useState(true)
-  const [aztlanId, setAztlanId] = useState('')
+  const [aztlanId, setAztlanId] = useState(aztlanIdPrellenado || '')
   const [imagen, setImagen] = useState<File | null>(null)
   const [imagenPreview, setImagenPreview] = useState<string | null>(null)
   const [imagenLoading, setImagenLoading] = useState(false)
