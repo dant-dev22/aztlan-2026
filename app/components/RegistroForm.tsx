@@ -48,6 +48,10 @@ const nivelesExperienciaAdultosMasters = ['Principiante', 'Intermedio', 'Avanzad
 const categoriasPesoVaronil = ['-60', '-65', '-73', '-79', '-85', '-91', '-100', '+100']
 const categoriasPesoFemenil = ['-50', '-55', '-60', '-65', '-70', '+70']
 
+// Cintas por tipo de registro (valor enviado al backend = label en minúscula)
+const cintasAdultosMasters = ['Blanca', 'Azul', 'Morada', 'Cafe', 'Negra']
+const cintasNinosJuveniles = ['Blanca', 'Gris', 'Amarilla', 'Naranja', 'Verde', 'Azul', 'Morada']
+
 export default function RegistroForm({
   tipoRegistro,
   titulo,
@@ -75,6 +79,7 @@ export default function RegistroForm({
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [submitAttempted, setSubmitAttempted] = useState(false)
   const [respuestaBackend, setRespuestaBackend] = useState<{
     nombreParticipante: string
     mensaje: string
@@ -143,6 +148,10 @@ export default function RegistroForm({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setSubmitAttempted(true)
+    if (!formData.cinta?.trim()) {
+      return
+    }
     setIsSubmitting(true)
     setSubmitStatus('idle')
 
@@ -179,6 +188,7 @@ export default function RegistroForm({
           categoriaPeso: '',
           ...camposPersonalizados,
         })
+        setSubmitAttempted(false)
         if (esAdultosMasters) {
           setPesoTab('varonil')
         }
@@ -249,7 +259,7 @@ export default function RegistroForm({
             />
           </div>
 
-          {/* Cinta - Requerido para todos los participantes */}
+          {/* Cinta - Requerido para todos los participantes (select según tipo) */}
           <div>
             <label
               htmlFor="cinta"
@@ -257,16 +267,25 @@ export default function RegistroForm({
             >
               Cinta *
             </label>
-            <input
-              type="text"
+            <select
               id="cinta"
               name="cinta"
               value={formData.cinta}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 rounded-lg border-2 border-primary-text/20 focus:border-steel-gray focus:outline-none transition-colors duration-300 bg-soft-white"
-              placeholder="Ej: Blanca, Amarilla, Naranja, etc."
-            />
+              className={`w-full px-4 py-3 rounded-lg border-2 focus:outline-none transition-colors duration-300 bg-soft-white ${
+                submitStatus === 'error' || (!formData.cinta?.trim() && submitAttempted)
+                  ? 'border-red-500 focus:border-red-500'
+                  : 'border-primary-text/20 focus:border-steel-gray'
+              }`}
+            >
+              <option value="">Elige tu cinta</option>
+              {(esAdultosMasters ? cintasAdultosMasters : cintasNinosJuveniles).map((cinta) => (
+                <option key={cinta} value={cinta.toLowerCase()}>
+                  {cinta}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Campos específicos para Infantil y Juvenil */}
