@@ -128,6 +128,7 @@ export default function RegistroForm({
     if (esAdultosMasters) {
       return {
         ...datosBase,
+        cinta: formData.cinta,
         edad: parseInt(formData.edad, 10),
         sexo: formData.sexo,
         nivelExperiencia: formData.nivelExperiencia,
@@ -247,6 +248,26 @@ export default function RegistroForm({
             />
           </div>
 
+          {/* Cinta - Requerido para todos los participantes */}
+          <div>
+            <label
+              htmlFor="cinta"
+              className="block text-sm font-medium text-primary-text mb-2"
+            >
+              Cinta *
+            </label>
+            <input
+              type="text"
+              id="cinta"
+              name="cinta"
+              value={formData.cinta}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 rounded-lg border-2 border-primary-text/20 focus:border-steel-gray focus:outline-none transition-colors duration-300 bg-soft-white"
+              placeholder="Ej: Blanca, Amarilla, Naranja, etc."
+            />
+          </div>
+
           {/* Campos específicos para Infantil y Juvenil */}
           {esInfantilJuvenil && (
             <>
@@ -270,26 +291,6 @@ export default function RegistroForm({
                   <option value="masculino">Masculino</option>
                   <option value="femenino">Femenino</option>
                 </select>
-              </div>
-
-              {/* Cinta */}
-              <div>
-                <label
-                  htmlFor="cinta"
-                  className="block text-sm font-medium text-primary-text mb-2"
-                >
-                  Cinta *
-                </label>
-                <input
-                  type="text"
-                  id="cinta"
-                  name="cinta"
-                  value={formData.cinta}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border-2 border-primary-text/20 focus:border-steel-gray focus:outline-none transition-colors duration-300 bg-soft-white"
-                  placeholder="Ej: Blanca, Amarilla, Naranja, etc."
-                />
               </div>
 
               {/* Nivel de Experiencia */}
