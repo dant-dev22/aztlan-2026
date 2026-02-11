@@ -111,6 +111,7 @@ export default function RegistroForm({
       tipoRegistro,
       nombreCompleto: formData.nombreCompleto,
       email: formData.email,
+      cinta: formData.cinta,
       timestamp: new Date().toISOString(),
     }
 

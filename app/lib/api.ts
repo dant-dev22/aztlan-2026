@@ -15,7 +15,7 @@ export interface RegistroPayload {
   email: string
   timestamp?: string
   sexo?: string
-  cinta?: string
+  cinta: string
   nivelExperiencia?: string
   categoriaEdad?: string
   categoriaPeso?: string

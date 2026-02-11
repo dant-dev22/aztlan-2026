@@ -6,9 +6,9 @@ interface RegistroAztlan {
   nombreCompleto: string
   email: string
   timestamp: string
-  // Campos para Infantil y Juvenil
+  // Campos para Infantil y Juvenil (cinta requerido para todos)
   sexo?: string
-  cinta?: string
+  cinta: string
   nivelExperiencia?: string
   categoriaEdad?: string
   categoriaPeso?: string
