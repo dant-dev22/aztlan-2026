@@ -68,6 +68,7 @@ export default function RegistroForm({
   const [formData, setFormData] = useState({
     nombreCompleto: '',
     email: '',
+    equipo: '',
     sexo: '',
     edad: '',
     categoriaEdad: '',
@@ -116,6 +117,7 @@ export default function RegistroForm({
       tipoRegistro,
       nombreCompleto: formData.nombreCompleto,
       email: formData.email,
+      equipo: formData.equipo,
       cinta: formData.cinta,
       timestamp: new Date().toISOString(),
     }
@@ -149,7 +151,7 @@ export default function RegistroForm({
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSubmitAttempted(true)
-    if (!formData.cinta?.trim()) {
+    if (!formData.equipo?.trim() || !formData.cinta?.trim()) {
       return
     }
     setIsSubmitting(true)
@@ -180,6 +182,7 @@ export default function RegistroForm({
         setFormData({
           nombreCompleto: '',
           email: '',
+          equipo: '',
           sexo: '',
           edad: '',
           categoriaEdad: '',
@@ -256,6 +259,30 @@ export default function RegistroForm({
               required
               className="w-full px-4 py-3 rounded-lg border-2 border-primary-text/20 focus:border-steel-gray focus:outline-none transition-colors duration-300 bg-soft-white"
               placeholder="tu@email.com"
+            />
+          </div>
+
+          {/* Equipo - Requerido para todos los participantes */}
+          <div>
+            <label
+              htmlFor="equipo"
+              className="block text-sm font-medium text-primary-text mb-2"
+            >
+              Equipo *
+            </label>
+            <input
+              type="text"
+              id="equipo"
+              name="equipo"
+              value={formData.equipo}
+              onChange={handleChange}
+              required
+              className={`w-full px-4 py-3 rounded-lg border-2 focus:outline-none transition-colors duration-300 bg-soft-white ${
+                submitStatus === 'error' || (!formData.equipo?.trim() && submitAttempted)
+                  ? 'border-red-500 focus:border-red-500'
+                  : 'border-primary-text/20 focus:border-steel-gray'
+              }`}
+              placeholder="Nombre del equipo"
             />
           </div>
 

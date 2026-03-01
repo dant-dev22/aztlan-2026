@@ -52,6 +52,7 @@ export default function AdminTable({ usuarios, onApprove, onDelete, onViewCompro
           <tr>
             <th className="px-4 py-3 text-left text-sm font-semibold">Nombre</th>
             <th className="px-4 py-3 text-left text-sm font-semibold">Email</th>
+            <th className="px-4 py-3 text-left text-sm font-semibold">Equipo</th>
             <th className="px-4 py-3 text-left text-sm font-semibold">Tipo</th>
             <th className="px-4 py-3 text-left text-sm font-semibold">Categoría</th>
             <th className="px-4 py-3 text-left text-sm font-semibold">Fecha Registro</th>
@@ -71,6 +72,9 @@ export default function AdminTable({ usuarios, onApprove, onDelete, onViewCompro
               </td>
               <td className="px-4 py-3 text-sm text-secondary-text">
                 {usuario.email || '-'}
+              </td>
+              <td className="px-4 py-3 text-sm text-secondary-text">
+                {usuario.equipo || '-'}
               </td>
               <td className="px-4 py-3 text-sm text-secondary-text">
                 {formatearTipoRegistro(usuario.tipoRegistro)}

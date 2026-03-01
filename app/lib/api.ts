@@ -13,6 +13,7 @@ export interface RegistroPayload {
   tipoRegistro: TipoRegistro
   nombreCompleto: string
   email: string
+  equipo: string
   timestamp?: string
   sexo?: string
   cinta: string
@@ -57,6 +58,7 @@ export interface UsuarioApi {
   tipoRegistro: TipoRegistro
   nombreCompleto: string
   email: string
+  equipo?: string
   timestamp: string
   createdAt?: string
   sexo?: string
