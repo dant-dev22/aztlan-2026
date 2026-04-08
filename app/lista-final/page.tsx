@@ -3,132 +3,25 @@
 import { useMemo } from 'react'
 import Link from 'next/link'
 import Header from '@/app/components/Header'
-import { useUsers, type UsuarioCompleto } from '@/app/hooks/useUsers'
+import { useUsers } from '@/app/hooks/useUsers'
+import { agruparListaFinal } from '@/app/lib/listaFinal'
 
-const TIPO_REGISTRO_ORDER: Record<string, number> = { juvenil: 0, adultos: 1, masters: 2 }
-
-const EDAD_ORDER: Record<string, number> = {
-  'infantil-1': 0,
-  'infantil-2': 1,
-  adolescentes: 2,
-  juveniles: 3,
-}
-
-const EDAD_LABELS: Record<string, string> = {
-  'infantil-1': 'Infantil 1 (6-9 años)',
-  'infantil-2': 'Infantil 2 (10-12 años)',
-  adolescentes: 'Adolescentes (13-14 años)',
-  juveniles: 'Juveniles (15-17 años)',
-}
-
-const NIVEL_ORDER: Record<string, number> = {
-  principiante: 0,
-  intermedio: 1,
-  avanzado: 2,
-}
-
-const CINTA_ORDER_ADULTOS = ['blanca', 'azul', 'morada', 'cafe', 'negra']
-const CINTA_ORDER_JUVENIL = ['blanca', 'gris', 'amarilla', 'naranja', 'verde', 'azul', 'morada']
-
-function pesoSortValue(peso: string | undefined): number {
-  if (!peso) return 0
-  const t = peso.trim()
-  if (t.startsWith('+')) {
-    return 1000 + parseInt(t.slice(1), 10)
-  }
-  const n = parseInt(t, 10)
-  return Number.isNaN(n) ? 0 : n
-}
-
-function nivelOrder(nivel: string | undefined): number {
-  if (!nivel) return 99
-  return NIVEL_ORDER[nivel.toLowerCase()] ?? 99
-}
-
-function cintaOrderIndex(u: UsuarioCompleto): number {
-  const raw = (u.cinta || '').toLowerCase().trim()
-  const order = u.tipoRegistro === 'juvenil' ? CINTA_ORDER_JUVENIL : CINTA_ORDER_ADULTOS
-  const idx = order.indexOf(raw)
-  return idx === -1 ? 999 : idx
-}
-
-/** Encabezado de categoría para agrupar y mostrar */
-function etiquetaCategoria(u: UsuarioCompleto): string {
-  if (u.tipoRegistro === 'juvenil') {
-    const edad = u.categoriaEdad ? EDAD_LABELS[u.categoriaEdad] ?? u.categoriaEdad : ''
-    const peso = u.categoriaPeso ? `${u.categoriaPeso} kg` : ''
-    const nivel = u.nivelExperiencia?.toLowerCase() ?? ''
-    return [edad, peso, nivel].filter(Boolean).join(' · ')
-  }
-  const peso = u.categoriaPeso ? `${u.categoriaPeso}kg` : ''
-  const tipo = u.categoriaPesoTipo ?? ''
-  const nivel = u.nivelExperiencia?.toLowerCase() ?? ''
-  return [peso, tipo, nivel].filter(Boolean).join(' ')
-}
-
-function claveOrdenCategoria(a: UsuarioCompleto): number[] {
-  const tipo = TIPO_REGISTRO_ORDER[a.tipoRegistro] ?? 9
-  if (a.tipoRegistro === 'juvenil') {
-    const edad = EDAD_ORDER[a.categoriaEdad ?? ''] ?? 99
-    const peso = pesoSortValue(a.categoriaPeso)
-    const nivel = nivelOrder(a.nivelExperiencia)
-    return [tipo, edad, peso, nivel]
-  }
-  const peso = pesoSortValue(a.categoriaPeso)
-  const division = a.categoriaPesoTipo === 'femenil' ? 1 : 0
-  const nivel = nivelOrder(a.nivelExperiencia)
-  return [tipo, peso, division, nivel]
-}
-
-function compararTuplas(x: number[], y: number[]): number {
-  const len = Math.max(x.length, y.length)
-  for (let i = 0; i < len; i++) {
-    const vx = x[i] ?? 0
-    const vy = y[i] ?? 0
-    if (vx !== vy) return vx - vy
-  }
-  return 0
-}
-
-function compararParticipantes(a: UsuarioCompleto, b: UsuarioCompleto): number {
-  const cat = compararTuplas(claveOrdenCategoria(a), claveOrdenCategoria(b))
-  if (cat !== 0) return cat
-  const cinta = cintaOrderIndex(a) - cintaOrderIndex(b)
-  if (cinta !== 0) return cinta
-  return (a.nombreCompleto || '').localeCompare(b.nombreCompleto || '', 'es', {
-    sensitivity: 'base',
-  })
-}
-
-type GrupoCategoria = {
-  titulo: string
-  participantes: UsuarioCompleto[]
-}
+/** Estilos de encabezado que rotan: grises y neutros distintos por bloque */
+const ENCABEZADO_CATEGORIA_CLASSES = [
+  'bg-light-ash border-l-4 border-charcoal-ink/30',
+  'bg-warm-white border-l-4 border-steel-gray',
+  'bg-[#DCDCD8] border-l-4 border-graphite/35',
+  'bg-silver-fog/50 border-l-4 border-secondary-text/50',
+  'bg-[#E4E4E0] border-l-4 border-charcoal-ink/25',
+  'bg-light-ash/90 border-l-4 border-muted-text',
+] as const
 
 export default function ListaFinalPage() {
   const { usuarios, loading, error, cargarUsuarios } = useUsers()
 
   const grupos = useMemo(() => {
     const aprobados = usuarios.filter((u) => u.comprobanteAprobado)
-    aprobados.sort(compararParticipantes)
-
-    const mapa = new Map<string, UsuarioCompleto[]>()
-    for (const u of aprobados) {
-      const titulo = etiquetaCategoria(u) || 'Sin categoría'
-      if (!mapa.has(titulo)) mapa.set(titulo, [])
-      mapa.get(titulo)!.push(u)
-    }
-
-    const titulosOrdenados = Array.from(mapa.keys()).sort((ta, tb) => {
-      const ua = mapa.get(ta)![0]
-      const ub = mapa.get(tb)![0]
-      return compararParticipantes(ua, ub)
-    })
-
-    return titulosOrdenados.map((titulo) => ({
-      titulo,
-      participantes: mapa.get(titulo)!,
-    })) as GrupoCategoria[]
+    return agruparListaFinal(aprobados)
   }, [usuarios])
 
   return (
@@ -172,20 +65,42 @@ export default function ListaFinalPage() {
             </p>
           ) : (
             <div className="space-y-10">
-              {grupos.map((grupo) => (
-                <section key={grupo.titulo} className="border-b-2 border-primary-text/10 pb-10 last:border-0 last:pb-0">
-                  <h2 className="text-lg sm:text-xl font-semibold text-charcoal-ink mb-4">
-                    {grupo.titulo}
-                  </h2>
-                  <ul className="space-y-2 text-primary-text list-none">
-                    {grupo.participantes.map((p) => (
-                      <li key={p.id} className="font-medium">
-                        {p.nombreCompleto}
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              ))}
+              {grupos.map((grupo, groupIndex) => {
+                const headerClass =
+                  ENCABEZADO_CATEGORIA_CLASSES[groupIndex % ENCABEZADO_CATEGORIA_CLASSES.length]
+                return (
+                  <section
+                    key={grupo.titulo}
+                    className="border-b-2 border-primary-text/10 pb-10 last:border-0 last:pb-0"
+                  >
+                    <h2
+                      className={`text-lg sm:text-xl font-semibold text-primary-text mb-4 rounded-r-lg py-3 px-4 shadow-sm ${headerClass}`}
+                    >
+                      {grupo.titulo}
+                    </h2>
+                    <ul className="space-y-2.5 text-primary-text list-none">
+                      {grupo.participantes.map((p, i) => {
+                        const academia = p.equipo?.trim() || '—'
+                        return (
+                          <li
+                            key={p.id}
+                            className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 text-primary-text"
+                          >
+                            <span className="inline-flex min-w-[1.75rem] shrink-0 justify-end tabular-nums text-secondary-text font-semibold text-sm sm:text-base">
+                              {i + 1}
+                            </span>
+                            <span className="font-medium">{p.nombreCompleto}</span>
+                            <span className="text-muted-text" aria-hidden>
+                              ·
+                            </span>
+                            <span className="text-secondary-text font-normal">{academia}</span>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </section>
+                )
+              })}
             </div>
           )}
         </div>
