@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react'
 import Modal from '@/app/components/Modal'
 import type { UsuarioCompleto } from '@/app/hooks/useUsers'
 import type { TipoRegistro } from '@/app/lib/api'
+import { agruparListaFinal } from '@/app/lib/listaFinal'
 
 const TIPOS_PARTICIPANTE: { value: TipoRegistro; label: string }[] = [
   { value: 'juvenil', label: 'Infantil y Juvenil' },
@@ -12,6 +13,9 @@ const TIPOS_PARTICIPANTE: { value: TipoRegistro; label: string }[] = [
 ]
 
 type FiltroComprobante = 'todos' | 'aprobados' | 'pendientes'
+
+/** Completo: CSV con todas las columnas. Lista final: solo aprobados (según filtros), orden y columnas como /lista-final */
+type ModoReporte = 'completo' | 'lista-final'
 
 interface DownloadReportButtonProps {
   usuarios: UsuarioCompleto[]
@@ -66,6 +70,36 @@ function buildCsv(usuarios: UsuarioCompleto[]): string {
   return [headerLine, ...dataLines].join('\r\n')
 }
 
+function buildCsvListaFinal(usuarios: UsuarioCompleto[]): string {
+  const grupos = agruparListaFinal(usuarios)
+  const headers = [
+    'Categoría',
+    'Nº',
+    'Nombre',
+    'Academia',
+    'Cinta',
+    'Tipo registro',
+    'Aztlan ID',
+  ]
+  const rows: string[][] = []
+  for (const g of grupos) {
+    g.participantes.forEach((u, idx) => {
+      rows.push([
+        escapeCsvCell(g.titulo),
+        escapeCsvCell(idx + 1),
+        escapeCsvCell(u.nombreCompleto),
+        escapeCsvCell(u.equipo),
+        escapeCsvCell(u.cinta),
+        escapeCsvCell(u.tipoRegistro),
+        escapeCsvCell(u.aztlan_id),
+      ])
+    })
+  }
+  const headerLine = headers.join(',')
+  const dataLines = rows.map((row) => row.join(','))
+  return [headerLine, ...dataLines].join('\r\n')
+}
+
 function triggerDownload(content: string, filename: string) {
   const blob = new Blob(['\uFEFF' + content], { type: 'text/csv;charset=utf-8' })
   const url = URL.createObjectURL(blob)
@@ -82,6 +116,7 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
     () => new Set<TipoRegistro>(['juvenil', 'adultos', 'masters'])
   )
   const [filtroComprobante, setFiltroComprobante] = useState<FiltroComprobante>('todos')
+  const [modoReporte, setModoReporte] = useState<ModoReporte>('completo')
 
   const toggleTipo = (tipo: TipoRegistro) => {
     setTiposSeleccionados((prev) => {
@@ -95,16 +130,25 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
   const participantesFiltrados = useMemo(() => {
     return usuarios.filter((u) => {
       if (!tiposSeleccionados.has(u.tipoRegistro)) return false
+      if (modoReporte === 'lista-final') {
+        return Boolean(u.comprobanteAprobado)
+      }
       if (filtroComprobante === 'aprobados' && !u.comprobanteAprobado) return false
       if (filtroComprobante === 'pendientes' && u.comprobanteAprobado) return false
       return true
     })
-  }, [usuarios, tiposSeleccionados, filtroComprobante])
+  }, [usuarios, tiposSeleccionados, filtroComprobante, modoReporte])
 
   const handleDescargar = () => {
-    const csv = buildCsv(participantesFiltrados)
     const fecha = new Date().toISOString().slice(0, 10)
-    const filename = `reporte-participantes-aztlan-2026-${fecha}.csv`
+    const csv =
+      modoReporte === 'lista-final'
+        ? buildCsvListaFinal(participantesFiltrados)
+        : buildCsv(participantesFiltrados)
+    const filename =
+      modoReporte === 'lista-final'
+        ? `lista-final-aztlan-2026-${fecha}.csv`
+        : `reporte-participantes-aztlan-2026-${fecha}.csv`
     triggerDownload(csv, filename)
     setModalOpen(false)
   }
@@ -132,6 +176,46 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
             El archivo CSV se descargará con los participantes que cumplan los filtros seleccionados.
           </p>
 
+          <div role="group" aria-labelledby="modo-reporte-label">
+            <span id="modo-reporte-label" className="block text-sm font-semibold text-primary-text mb-3">
+              Formato del archivo
+            </span>
+            <div className="flex flex-col gap-3">
+              <label className="flex items-start gap-3 cursor-pointer text-secondary-text hover:text-primary-text">
+                <input
+                  type="radio"
+                  name="modo-reporte"
+                  checked={modoReporte === 'completo'}
+                  onChange={() => setModoReporte('completo')}
+                  className="mt-1 w-4 h-4 border-2 border-graphite text-charcoal-ink focus:ring-charcoal-ink shrink-0"
+                />
+                <span>
+                  <span className="font-medium text-primary-text">Reporte completo</span>
+                  <span className="block text-sm mt-0.5">
+                    Todas las columnas del registro; respeta el filtro de comprobante abajo.
+                  </span>
+                </span>
+              </label>
+              <label className="flex items-start gap-3 cursor-pointer text-secondary-text hover:text-primary-text">
+                <input
+                  type="radio"
+                  name="modo-reporte"
+                  checked={modoReporte === 'lista-final'}
+                  onChange={() => setModoReporte('lista-final')}
+                  className="mt-1 w-4 h-4 border-2 border-graphite text-charcoal-ink focus:ring-charcoal-ink shrink-0"
+                />
+                <span>
+                  <span className="font-medium text-primary-text">Lista final</span>
+                  <span className="block text-sm mt-0.5">
+                    Solo participantes con pago aprobado (entre los tipos marcados). Mismo orden que la página{' '}
+                    <span className="text-primary-text font-medium">/lista-final</span>: categoría, número en
+                    categoría, nombre, academia, cinta.
+                  </span>
+                </span>
+              </label>
+            </div>
+          </div>
+
           <div role="group" aria-labelledby="filtro-tipo-label">
             <span id="filtro-tipo-label" className="block text-sm font-semibold text-primary-text mb-3">
               Tipo de participante
@@ -154,10 +238,19 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
             </div>
           </div>
 
-          <div role="group" aria-labelledby="filtro-comprobante-label">
+          <div
+            role="group"
+            aria-labelledby="filtro-comprobante-label"
+            className={modoReporte === 'lista-final' ? 'opacity-60' : ''}
+          >
             <span id="filtro-comprobante-label" className="block text-sm font-semibold text-primary-text mb-3">
               Comprobante de pago
             </span>
+            {modoReporte === 'lista-final' && (
+              <p className="text-sm text-secondary-text mb-3 -mt-1">
+                En modo Lista final solo se exportan aprobados; este filtro no aplica.
+              </p>
+            )}
             <div className="flex flex-wrap gap-4">
               <label className="flex items-center gap-2 cursor-pointer text-secondary-text hover:text-primary-text">
                 <input
@@ -166,6 +259,7 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
                   checked={filtroComprobante === 'todos'}
                   onChange={() => setFiltroComprobante('todos')}
                   className="w-4 h-4 border-2 border-graphite text-charcoal-ink focus:ring-charcoal-ink"
+                  disabled={modoReporte === 'lista-final'}
                 />
                 <span>Todos</span>
               </label>
@@ -176,6 +270,7 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
                   checked={filtroComprobante === 'aprobados'}
                   onChange={() => setFiltroComprobante('aprobados')}
                   className="w-4 h-4 border-2 border-graphite text-charcoal-ink focus:ring-charcoal-ink"
+                  disabled={modoReporte === 'lista-final'}
                 />
                 <span>Solo con comprobante aprobado</span>
               </label>
@@ -186,6 +281,7 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
                   checked={filtroComprobante === 'pendientes'}
                   onChange={() => setFiltroComprobante('pendientes')}
                   className="w-4 h-4 border-2 border-graphite text-charcoal-ink focus:ring-charcoal-ink"
+                  disabled={modoReporte === 'lista-final'}
                 />
                 <span>Solo pendientes de aprobación</span>
               </label>
