@@ -10,6 +10,8 @@ import ModalExitoRegistro from './components/ModalExitoRegistro'
 import Modal from './components/Modal'
 import Footer from './components/Footer'
 import Header from './components/Header'
+import RegistroCerrado from './components/RegistroCerrado'
+import { REGISTRO_ABIERTO } from './lib/registroConfig'
 
 const CARDS_DATA: { tipo: TipoRegistro; title: string; description: string }[] = [
   { tipo: 'juvenil', title: 'Registro Infantil y Juvenil', description: 'Para participantes infantiles y juveniles (6-17 años)' },
@@ -57,6 +59,20 @@ export default function Home() {
   }
 
   const cardSeleccionada = CARDS_DATA.find((c) => c.tipo === modalRegistro)
+
+  if (!REGISTRO_ABIERTO) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 py-8 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <RegistroCerrado variant="home" />
+          </div>
+        </main>
+        <Footer />
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
