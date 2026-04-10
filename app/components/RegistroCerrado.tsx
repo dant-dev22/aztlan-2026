@@ -35,18 +35,12 @@ export default function RegistroCerrado({ variant = 'home' }: RegistroCerradoPro
             Gracias por tu participación. Puedes consultar la lista final de participantes en el
             enlace de abajo. Para novedades y comunicados oficiales, sigue las redes del torneo.
           </p>
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mb-8">
+          <div className="flex justify-center mb-8">
             <Link
               href="/lista-final"
               className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-charcoal-ink text-soft-white font-medium hover:bg-graphite transition-colors duration-300"
             >
               Ver lista final de participantes
-            </Link>
-            <Link
-              href="/"
-              className="inline-flex items-center justify-center px-6 py-3 rounded-lg border-2 border-primary-text/20 text-primary-text hover:bg-light-ash/40 transition-colors duration-300"
-            >
-              Ir al inicio
             </Link>
           </div>
           <div className="pt-6 border-t border-primary-text/10">
