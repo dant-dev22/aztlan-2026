@@ -60,6 +60,21 @@ export function etiquetaCategoria(u: UsuarioCompleto): string {
   return [peso, tipo, nivel].filter(Boolean).join(' ')
 }
 
+/** Clave de sección en lista final: separa adultos y masters aunque compartan peso/división/nivel */
+export function tituloGrupoListaFinal(u: UsuarioCompleto): string {
+  if (u.tipoRegistro === 'juvenil') {
+    return etiquetaCategoria(u) || 'Sin categoría'
+  }
+  const detalle = etiquetaCategoria(u)
+  if (u.tipoRegistro === 'adultos') {
+    return detalle ? `Adultos · ${detalle}` : 'Adultos'
+  }
+  if (u.tipoRegistro === 'masters') {
+    return detalle ? `Masters · ${detalle}` : 'Masters'
+  }
+  return detalle || 'Sin categoría'
+}
+
 function claveOrdenCategoria(a: UsuarioCompleto): number[] {
   const tipo = TIPO_REGISTRO_ORDER[a.tipoRegistro] ?? 9
   if (a.tipoRegistro === 'juvenil') {
@@ -106,7 +121,7 @@ export function agruparListaFinal(participantes: UsuarioCompleto[]): GrupoListaF
 
   const mapa = new Map<string, UsuarioCompleto[]>()
   for (const u of copia) {
-    const titulo = etiquetaCategoria(u) || 'Sin categoría'
+    const titulo = tituloGrupoListaFinal(u)
     if (!mapa.has(titulo)) mapa.set(titulo, [])
     mapa.get(titulo)!.push(u)
   }
