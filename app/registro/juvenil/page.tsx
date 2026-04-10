@@ -1,5 +1,7 @@
 import RegistroForm from '@/app/components/RegistroForm'
 import Header from '@/app/components/Header'
+import RegistroCerrado from '@/app/components/RegistroCerrado'
+import { REGISTRO_ABIERTO } from '@/app/lib/registroConfig'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -14,7 +16,13 @@ export default function RegistroJuvenil() {
 
       {/* Main */}
       <main className="flex-1 py-8 px-4 sm:px-6 lg:px-8">
-        <RegistroForm tipoRegistro="juvenil" />
+        {REGISTRO_ABIERTO ? (
+          <RegistroForm tipoRegistro="juvenil" />
+        ) : (
+          <div className="max-w-7xl mx-auto">
+            <RegistroCerrado variant="page" />
+          </div>
+        )}
       </main>
 
       {/* Footer */}
