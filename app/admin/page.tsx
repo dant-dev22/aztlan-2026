@@ -91,6 +91,12 @@ export default function AdminPage() {
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <Link
+                href="/brackets"
+                className="px-4 py-2 rounded-lg border-2 border-primary-text/20 text-primary-text hover:bg-light-ash/30 transition-colors"
+              >
+                Brackets
+              </Link>
+              <Link
                 href="/"
                 className="px-4 py-2 rounded-lg border-2 border-primary-text/20 text-primary-text hover:bg-light-ash/30 transition-colors"
               >
