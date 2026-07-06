@@ -82,30 +82,30 @@ export default function Home() {
         <div className="max-w-7xl mx-auto space-y-10">
           {vista === 'principal' && (
             <>
-              <section className="surface-panel-dark animate-fade-in overflow-hidden px-6 py-8 sm:px-8 lg:px-12">
-                <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-                  <div>
+              <section className="animate-fade-in">
+                <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+                  <div className="transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(11,18,32,0.12)]">
+                    <InstruccionesRegistro />
+                  </div>
+                  <div className="surface-panel-dark px-6 py-7 transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_60px_rgba(0,0,0,0.32)] active:scale-[0.99] sm:px-8">
                     <p className="section-kicker mb-4 border-white/10 bg-white/10 text-blue-mist">
-                      Registro abierto
+                      Aztlan 2026
                     </p>
-                    <h2 className="max-w-3xl text-4xl font-black tracking-tight text-soft-white sm:text-5xl lg:text-6xl">
-                      Diseñado para moverse rápido, registrarse fácil y competir con claridad.
+                    <h2 className="text-2xl font-black tracking-tight text-soft-white sm:text-3xl">
+                      Demuestra tus habilidades en el tatami.
                     </h2>
-                    <p className="mt-5 max-w-2xl text-base leading-7 text-white/72 sm:text-lg">
-                      Inicia tu registro, guarda tu Aztlan ID y termina tu proceso cuando tengas el comprobante de pago.
+                    <p className="mt-4 text-sm leading-6 text-white/72 sm:text-base">
+                      Registra tu categoría, guarda tu Aztlan ID y completa tu proceso cuando tengas tu comprobante.
                     </p>
-                    <div className="mt-6 flex flex-wrap gap-3">
+                    <div className="mt-5 flex flex-wrap gap-3">
                       <span className="status-badge border border-white/10 bg-white/8 text-white/75">Infantil y Juvenil</span>
                       <span className="status-badge border border-white/10 bg-white/8 text-white/75">Adultos</span>
                       <span className="status-badge border border-white/10 bg-white/8 text-white/75">Masters</span>
                     </div>
                   </div>
-                  <div className="surface-muted p-5 sm:p-6">
-                    <InstruccionesRegistro />
-                  </div>
                 </div>
               </section>
-              <section id="registro-participantes" className="surface-panel animate-fade-in scroll-mt-6 px-6 py-10 text-center sm:px-8 lg:px-12" aria-labelledby="main-title">
+              <section id="registro-participantes" className="surface-panel animate-fade-in scroll-mt-6 px-6 py-10 text-center transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_58px_rgba(11,18,32,0.12)] sm:px-8 lg:px-12" aria-labelledby="main-title">
                 <p className="section-kicker mb-4">Flujo principal</p>
                 <h2 id="main-title" className="mb-4 text-3xl font-black tracking-tight text-primary-text sm:text-4xl lg:text-5xl">
                   Registro de participantes

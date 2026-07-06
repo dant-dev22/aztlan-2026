@@ -48,14 +48,14 @@ function scrollASeccionRegistro() {
 export default function InstruccionesRegistro() {
   return (
     <section
-      className="rounded-[22px] border border-white/10 bg-charcoal-ink/92 p-6 text-soft-white shadow-[0_14px_40px_rgba(0,0,0,0.24)] sm:p-8"
+      className="bg-warm-white rounded-2xl p-6 sm:p-8 border-2 border-primary-text/10 max-w-2xl mx-auto"
       aria-labelledby="instrucciones-titulo"
     >
       <h2
         id="instrucciones-titulo"
-        className="mb-6 flex items-center gap-2 text-xl font-bold text-soft-white sm:text-2xl"
+        className="text-xl sm:text-2xl font-bold text-primary-text mb-6 flex items-center gap-2"
       >
-        <svg className="w-6 h-6 text-signal-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+        <svg className="w-6 h-6 text-charcoal-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
         </svg>
         Cómo hacer tu registro
@@ -67,7 +67,7 @@ export default function InstruccionesRegistro() {
             className="flex gap-4 items-start"
           >
             <span
-              className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-signal-orange text-soft-white font-bold text-sm shadow-[0_8px_18px_rgba(255,122,26,0.32)]"
+              className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-charcoal-ink text-soft-white font-bold text-sm"
               aria-hidden
             >
               {paso.numero}
@@ -77,16 +77,16 @@ export default function InstruccionesRegistro() {
                 <button
                   type="button"
                   onClick={scrollASeccionRegistro}
-                  className="mb-1 rounded text-left font-semibold text-soft-white transition-colors hover:text-blue-200 hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-steel-gray/30 focus:ring-offset-1 focus:ring-offset-charcoal-ink"
+                  className="font-semibold text-primary-text mb-1 text-left cursor-pointer hover:text-charcoal-ink hover:underline underline-offset-2 transition-colors focus:outline-none focus:ring-2 focus:ring-charcoal-ink/30 focus:ring-offset-1 rounded"
                 >
                   {paso.titulo}
                 </button>
               ) : (
-                <h3 className="mb-1 font-semibold text-soft-white">{paso.titulo}</h3>
+                <h3 className="font-semibold text-primary-text mb-1">{paso.titulo}</h3>
               )}
-              <p className="text-sm text-white/68 sm:text-base">{paso.texto}</p>
+              <p className="text-secondary-text text-sm sm:text-base">{paso.texto}</p>
             </div>
-            <span className="mt-1 text-steel-gray/80" aria-hidden>
+            <span className="text-charcoal-ink/60 mt-1" aria-hidden>
               {paso.icono}
             </span>
           </li>

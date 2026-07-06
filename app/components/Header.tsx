@@ -28,7 +28,7 @@ export default function Header({
         }`}
       >
         <div className="flex items-center gap-4">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-2 shadow-[0_10px_30px_rgba(0,0,0,0.22)]">
+          <div className="rounded-2xl border border-white/70 bg-warm-white p-2 shadow-[0_10px_30px_rgba(0,0,0,0.22)]">
             <AppLogo size={108} priority className="flex-shrink-0" />
           </div>
           <div>

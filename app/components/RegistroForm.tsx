@@ -214,7 +214,7 @@ export default function RegistroForm({
     <div className="w-full">
       <div className="surface-panel overflow-hidden">
         <div className="bg-charcoal-ink px-6 py-8 text-center text-soft-white sm:px-8 lg:px-10">
-          <div className="mx-auto mb-4 w-fit rounded-2xl border border-white/10 bg-white/5 p-3">
+          <div className="mx-auto mb-4 w-fit rounded-2xl border border-white/70 bg-warm-white p-3 shadow-[0_10px_24px_rgba(0,0,0,0.18)]">
             <AppLogo size={104} />
           </div>
           <p className="section-kicker mb-4 border-white/10 bg-white/10 text-blue-mist">Registro Aztlan</p>

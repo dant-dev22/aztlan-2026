@@ -5,9 +5,6 @@ export default function Footer() {
     <footer className="mt-auto border-t border-primary-text/8 bg-warm-white/90 px-4 py-8 text-muted-text backdrop-blur sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="surface-muted flex flex-col items-center gap-4 px-6 py-6 text-center">
-          <p className="section-kicker bg-signal-orange-soft text-signal-orange border-signal-orange/20">
-            Comunidad oficial
-          </p>
           <nav className="flex items-center gap-6" aria-label="Redes sociales">
             <a
               href="https://www.instagram.com/aztlan_bjj?igsh=MTNrMHMzMno5ZTgwdg=="

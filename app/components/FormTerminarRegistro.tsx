@@ -173,7 +173,7 @@ export default function FormTerminarRegistro({ onClose, aztlanIdPrellenado }: Fo
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="mb-4 rounded-[26px] bg-charcoal-ink px-6 py-8 text-center text-soft-white">
-        <div className="mx-auto mb-3 w-fit rounded-2xl border border-white/10 bg-white/5 p-3">
+        <div className="mx-auto mb-3 w-fit rounded-2xl border border-white/70 bg-warm-white p-3 shadow-[0_10px_24px_rgba(0,0,0,0.18)]">
           <AppLogo size={100} />
         </div>
         <p className="section-kicker mb-3 border-white/10 bg-white/10 text-blue-mist">Paso final</p>
