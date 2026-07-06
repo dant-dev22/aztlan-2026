@@ -6,14 +6,13 @@ import Header from '@/app/components/Header'
 import { useUsers } from '@/app/hooks/useUsers'
 import { agruparListaFinal } from '@/app/lib/listaFinal'
 
-/** Estilos de encabezado que rotan: grises y neutros distintos por bloque */
 const ENCABEZADO_CATEGORIA_CLASSES = [
-  'bg-light-ash border-l-4 border-charcoal-ink/30',
-  'bg-warm-white border-l-4 border-steel-gray',
-  'bg-[#DCDCD8] border-l-4 border-graphite/35',
-  'bg-silver-fog/50 border-l-4 border-secondary-text/50',
-  'bg-[#E4E4E0] border-l-4 border-charcoal-ink/25',
-  'bg-light-ash/90 border-l-4 border-muted-text',
+  'bg-blue-mist border-l-4 border-steel-gray',
+  'bg-signal-orange-soft border-l-4 border-signal-orange',
+  'bg-light-ash border-l-4 border-electric-blue/50',
+  'bg-[#F2F4F7] border-l-4 border-secondary-text/40',
+  'bg-[#EFF3FF] border-l-4 border-steel-gray/55',
+  'bg-[#FFF4EC] border-l-4 border-signal-orange/45',
 ] as const
 
 export default function ListaFinalPage() {
@@ -25,27 +24,28 @@ export default function ListaFinalPage() {
   }, [usuarios])
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="page-shell min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 py-8 px-4 sm:px-6 lg:px-8">
+      <main className="flex-1 px-4 py-10 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+          <div className="surface-panel-dark mb-8 flex flex-col gap-4 px-6 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-primary-text">Lista final</h1>
-              <p className="text-secondary-text mt-1">
+              <p className="section-kicker mb-3 border-white/10 bg-white/10 text-blue-mist">Resultados confirmados</p>
+              <h1 className="text-2xl font-black tracking-tight text-soft-white sm:text-3xl">Lista final</h1>
+              <p className="mt-1 text-white/68">
                 Participantes con pago aprobado, por categoría y cinta
               </p>
             </div>
             <Link
               href="/"
-              className="px-4 py-2 rounded-lg border-2 border-primary-text/20 text-primary-text hover:bg-light-ash/30 transition-colors shrink-0 text-center"
+              className="inline-flex shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-center font-medium text-soft-white transition hover:bg-white/10"
             >
               Volver al inicio
             </Link>
           </div>
 
           {error && (
-            <div className="mb-6 p-4 rounded-lg bg-red-100 text-red-800 border border-red-200">
+            <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-800">
               <p>{error}</p>
               <button
                 type="button"
@@ -58,11 +58,15 @@ export default function ListaFinalPage() {
           )}
 
           {loading ? (
-            <p className="text-secondary-text py-8">Cargando lista...</p>
+            <div className="surface-panel px-6 py-10">
+              <p className="text-secondary-text">Cargando lista...</p>
+            </div>
           ) : grupos.length === 0 ? (
-            <p className="text-secondary-text py-8">
-              No hay participantes con pago aprobado por el momento.
-            </p>
+            <div className="surface-panel px-6 py-10">
+              <p className="text-secondary-text">
+                No hay participantes con pago aprobado por el momento.
+              </p>
+            </div>
           ) : (
             <div className="space-y-10">
               {grupos.map((grupo, groupIndex) => {
@@ -71,10 +75,10 @@ export default function ListaFinalPage() {
                 return (
                   <section
                     key={grupo.titulo}
-                    className="border-b-2 border-primary-text/10 pb-10 last:border-0 last:pb-0"
+                    className="surface-panel border border-primary-text/8 p-6 pb-8 last:pb-8 sm:p-8"
                   >
                     <h2
-                      className={`text-lg sm:text-xl font-semibold text-primary-text mb-4 rounded-r-lg py-3 px-4 shadow-sm ${headerClass}`}
+                      className={`mb-5 rounded-r-2xl py-3 px-4 text-lg font-black tracking-tight text-primary-text shadow-sm sm:text-xl ${headerClass}`}
                     >
                       {grupo.titulo}
                     </h2>
@@ -84,7 +88,7 @@ export default function ListaFinalPage() {
                         return (
                           <li
                             key={p.id}
-                            className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 text-primary-text"
+                            className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 rounded-2xl px-3 py-2 text-primary-text transition hover:bg-light-ash/35"
                           >
                             <span className="inline-flex min-w-[1.75rem] shrink-0 justify-end tabular-nums text-secondary-text font-semibold text-sm sm:text-base">
                               {i + 1}

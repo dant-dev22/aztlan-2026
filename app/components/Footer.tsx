@@ -2,15 +2,18 @@
 
 export default function Footer() {
   return (
-    <footer className="bg-light-ash/30 text-muted-text py-6 px-4 sm:px-6 lg:px-8 mt-auto">
+    <footer className="mt-auto border-t border-primary-text/8 bg-warm-white/90 px-4 py-8 text-muted-text backdrop-blur sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col items-center gap-4">
+        <div className="surface-muted flex flex-col items-center gap-4 px-6 py-6 text-center">
+          <p className="section-kicker bg-signal-orange-soft text-signal-orange border-signal-orange/20">
+            Comunidad oficial
+          </p>
           <nav className="flex items-center gap-6" aria-label="Redes sociales">
             <a
               href="https://www.instagram.com/aztlan_bjj?igsh=MTNrMHMzMno5ZTgwdg=="
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-text hover:text-charcoal-ink transition-colors duration-300 transform hover:scale-110"
+              className="rounded-full border border-primary-text/10 bg-warm-white p-3 text-secondary-text shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-signal-orange/30 hover:text-signal-orange"
               aria-label="Síguenos en Instagram"
             >
               <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
@@ -21,7 +24,7 @@ export default function Footer() {
               href="https://www.facebook.com/share/1KTzf6PiTf/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-text hover:text-charcoal-ink transition-colors duration-300 transform hover:scale-110"
+              className="rounded-full border border-primary-text/10 bg-warm-white p-3 text-secondary-text shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-steel-gray/30 hover:text-steel-gray"
               aria-label="Síguenos en Facebook"
             >
               <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
@@ -29,7 +32,10 @@ export default function Footer() {
               </svg>
             </a>
           </nav>
-          <p className="text-sm">&copy; 2026 Aztlan. Todos los derechos reservados.</p>
+          <p className="max-w-xl text-sm text-secondary-text">
+            Aztlan 2026. Registro digital del torneo, lista final y confirmaciones de participantes.
+          </p>
+          <p className="text-xs uppercase tracking-[0.18em] text-muted-text">&copy; 2026 Aztlan. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>

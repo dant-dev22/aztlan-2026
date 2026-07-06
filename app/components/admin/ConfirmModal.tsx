@@ -28,30 +28,30 @@ export default function ConfirmModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-charcoal-ink/50 backdrop-blur-sm animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-soft-black/70 backdrop-blur-sm animate-fade-in"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
     >
       <div
-        className="bg-warm-white rounded-2xl shadow-2xl p-6 sm:p-8 max-w-md w-full mx-4 transform transition-all"
+        className="surface-panel max-w-md w-full mx-4 p-6 sm:p-8 transform transition-all"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 id="modal-title" className="text-2xl font-bold text-primary-text mb-4">
+        <h2 id="modal-title" className="mb-4 text-2xl font-black tracking-tight text-primary-text">
           {title}
         </h2>
         <p className="text-secondary-text mb-6">{message}</p>
         <div className="flex gap-4 justify-end">
           <button
             onClick={onClose}
-            className="px-6 py-2 rounded-lg font-medium text-primary-text bg-light-ash hover:bg-silver-fog transition-colors"
+            className="btn-secondary"
           >
             {cancelText}
           </button>
           <button
             onClick={handleConfirm}
-            className="px-6 py-2 rounded-lg font-medium text-soft-white bg-charcoal-ink hover:bg-graphite transition-colors"
+            className="btn-primary"
           >
             {confirmText}
           </button>

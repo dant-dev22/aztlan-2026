@@ -14,8 +14,8 @@ export default function RegistroCerrado({ variant = 'home' }: RegistroCerradoPro
       aria-labelledby="registro-cerrado-titulo"
     >
       <div className="max-w-2xl mx-auto">
-        <div className="bg-warm-white rounded-2xl shadow-lg border border-primary-text/10 p-6 sm:p-10 text-center">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-light-ash text-primary-text mb-6" aria-hidden>
+        <div className="surface-panel overflow-hidden p-6 text-center sm:p-10">
+          <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-full bg-signal-orange-soft text-signal-orange shadow-[0_10px_20px_rgba(255,122,26,0.16)]" aria-hidden>
             <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path
                 strokeLinecap="round"
@@ -27,7 +27,7 @@ export default function RegistroCerrado({ variant = 'home' }: RegistroCerradoPro
           </div>
           <h2
             id="registro-cerrado-titulo"
-            className="text-2xl sm:text-3xl font-bold text-primary-text mb-4"
+            className="mb-4 text-2xl font-black tracking-tight text-primary-text sm:text-3xl"
           >
             El registro para Aztlán 2026 se ha cerrado
           </h2>
@@ -38,19 +38,19 @@ export default function RegistroCerrado({ variant = 'home' }: RegistroCerradoPro
           <div className="flex justify-center mb-8">
             <Link
               href="/lista-final"
-              className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-charcoal-ink text-soft-white font-medium hover:bg-graphite transition-colors duration-300"
+              className="btn-primary"
             >
               Ver lista final de participantes
             </Link>
           </div>
-          <div className="pt-6 border-t border-primary-text/10">
+          <div className="border-t border-primary-text/10 pt-6">
             <p className="text-sm text-muted-text mb-4">Redes oficiales del torneo</p>
             <nav className="flex items-center justify-center gap-6" aria-label="Redes sociales de Aztlán">
               <a
                 href="https://www.instagram.com/aztlan_bjj?igsh=MTNrMHMzMno5ZTgwdg=="
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-text hover:text-charcoal-ink transition-colors duration-300"
+                className="rounded-full border border-primary-text/10 bg-light-ash/35 p-3 text-muted-text transition-colors duration-300 hover:text-signal-orange"
                 aria-label="Instagram de Aztlán"
               >
                 <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
@@ -61,7 +61,7 @@ export default function RegistroCerrado({ variant = 'home' }: RegistroCerradoPro
                 href="https://www.facebook.com/share/1KTzf6PiTf/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-text hover:text-charcoal-ink transition-colors duration-300"
+                className="rounded-full border border-primary-text/10 bg-light-ash/35 p-3 text-muted-text transition-colors duration-300 hover:text-steel-gray"
                 aria-label="Facebook de Aztlán"
               >
                 <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden>

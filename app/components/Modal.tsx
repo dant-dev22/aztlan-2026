@@ -23,16 +23,16 @@ export default function Modal({
       role="dialog"
       aria-modal="true"
     >
-      <div className="absolute inset-0 bg-charcoal-ink/80 backdrop-blur-sm animate-fade-in" aria-hidden />
+      <div className="absolute inset-0 bg-soft-black/78 backdrop-blur-md animate-fade-in" aria-hidden />
       <div
-        className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-soft-white rounded-2xl shadow-2xl animate-fade-in"
+        className="surface-panel relative max-h-[90vh] w-full max-w-3xl overflow-y-auto border border-white/30 animate-fade-in"
         onClick={(e) => e.stopPropagation()}
       >
         {showCloseButton && (
           <button
             type="button"
             onClick={onClose}
-            className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-charcoal-ink text-soft-white hover:bg-graphite transition-colors duration-300 shadow-lg"
+            className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-primary-text/10 bg-warm-white text-primary-text shadow-lg transition duration-300 hover:border-signal-orange/30 hover:bg-signal-orange-soft hover:text-signal-orange"
             aria-label="Cerrar"
           >
             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

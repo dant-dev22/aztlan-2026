@@ -8,25 +8,24 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Dark backgrounds
-        'soft-black': '#121212',
-        'charcoal-ink': '#1C1C1E',
-        'graphite': '#2A2A2D',
-        // Light backgrounds and surfaces
-        'soft-white': '#F6F6F4',
-        'warm-white': '#EEEDE9',
-        'light-ash': '#E0E0DD',
-        // Text colors
-        'primary-text': '#1A1A1A',
-        'secondary-text': '#5E5E5E',
-        'muted-text': '#8C8C8C',
-        'disabled': '#B5B5B5',
-        // Accents (hovers, links, indicators)
-        'steel-gray': '#9CA3AF',
-        'silver-fog': '#C7C7C7',
-        // Success (comprobante enviado, botón habilitado)
-        'success-green': '#2D5A3D',
-        'success-green-hover': '#3D7B52',
+        'soft-black': '#05070B',
+        'charcoal-ink': '#0F1720',
+        'graphite': '#1D2735',
+        'soft-white': '#F6F8FB',
+        'warm-white': '#FFFFFF',
+        'light-ash': '#E7ECF3',
+        'primary-text': '#0B1220',
+        'secondary-text': '#4F5B6E',
+        'muted-text': '#7A8699',
+        'disabled': '#BBC4D3',
+        'steel-gray': '#2F6DF6',
+        'silver-fog': '#CFD7E4',
+        'signal-orange': '#FF7A1A',
+        'signal-orange-soft': '#FFF0E5',
+        'electric-blue': '#1E56D9',
+        'blue-mist': '#EAF1FF',
+        'success-green': '#0F8A5F',
+        'success-green-hover': '#127A56',
       },
     },
   },

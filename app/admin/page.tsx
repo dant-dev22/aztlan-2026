@@ -74,7 +74,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="page-shell min-h-screen flex flex-col">
       <Header />
       {authStatus === 'checking' && (
         <main className="flex-1 flex items-center justify-center py-16">
@@ -82,17 +82,18 @@ export default function AdminPage() {
         </main>
       )}
       {showContent && (
-      <main className="flex-1 py-8 px-4 sm:px-6 lg:px-8">
+      <main className="flex-1 px-4 py-10 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          <div className="surface-panel-dark mb-6 flex flex-col gap-4 px-6 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-primary-text">Panel de administración</h1>
-              <p className="text-secondary-text mt-1">Participantes registrados y comprobantes</p>
+              <p className="section-kicker mb-3 border-white/10 bg-white/10 text-blue-mist">Dashboard</p>
+              <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-soft-white">Panel de administración</h1>
+              <p className="mt-1 text-white/68">Participantes registrados y comprobantes</p>
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <Link
                 href="/"
-                className="px-4 py-2 rounded-lg border-2 border-primary-text/20 text-primary-text hover:bg-light-ash/30 transition-colors"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 font-medium text-soft-white transition hover:bg-white/10"
               >
                 Volver al inicio
               </Link>
@@ -101,7 +102,7 @@ export default function AdminPage() {
           </div>
 
           {error && (
-            <div className="mb-4 p-4 rounded-lg bg-red-100 text-red-800 border border-red-200">
+            <div className="mb-4 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-800">
               <p>{error}</p>
               <button
                 type="button"
@@ -118,7 +119,9 @@ export default function AdminPage() {
           </div>
 
           {loading ? (
-            <p className="text-secondary-text py-8">Cargando participantes...</p>
+            <div className="surface-panel px-6 py-10">
+              <p className="text-secondary-text">Cargando participantes...</p>
+            </div>
           ) : (
             <AdminTable
               usuarios={filtrados}
@@ -131,12 +134,15 @@ export default function AdminPage() {
       </main>
       )}
       <Modal isOpen={showLoginModal} onClose={() => {}} showCloseButton={false}>
-        <div className="max-w-sm mx-auto">
-          <h2 className="text-xl font-bold text-primary-text mb-2">Acceso administración</h2>
-          <p className="text-secondary-text text-sm mb-6">Ingresa usuario y contraseña para continuar.</p>
+        <div className="mx-auto max-w-sm">
+          <div className="mb-6 rounded-[24px] bg-charcoal-ink px-6 py-7 text-soft-white">
+            <p className="section-kicker mb-3 border-white/10 bg-white/10 text-blue-mist">Acceso seguro</p>
+            <h2 className="mb-2 text-xl font-black tracking-tight text-soft-white">Acceso administración</h2>
+            <p className="text-sm text-white/72">Ingresa usuario y contraseña para continuar.</p>
+          </div>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label htmlFor="admin-user" className="block text-sm font-medium text-primary-text mb-1">
+              <label htmlFor="admin-user" className="mb-1 block text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text">
                 Usuario
               </label>
               <input
@@ -145,13 +151,13 @@ export default function AdminPage() {
                 value={loginUser}
                 onChange={(e) => setLoginUser(e.target.value)}
                 autoComplete="username"
-                className="w-full px-4 py-3 rounded-lg border-2 border-primary-text/20 bg-soft-white text-primary-text placeholder-secondary-text/60 focus:border-charcoal-ink focus:outline-none focus:ring-2 focus:ring-charcoal-ink/20"
+                className="input-field"
                 placeholder="Usuario"
                 required
               />
             </div>
             <div>
-              <label htmlFor="admin-password" className="block text-sm font-medium text-primary-text mb-1">
+              <label htmlFor="admin-password" className="mb-1 block text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text">
                 Contraseña
               </label>
               <input
@@ -160,7 +166,7 @@ export default function AdminPage() {
                 value={loginPassword}
                 onChange={(e) => setLoginPassword(e.target.value)}
                 autoComplete="current-password"
-                className="w-full px-4 py-3 rounded-lg border-2 border-primary-text/20 bg-soft-white text-primary-text placeholder-secondary-text/60 focus:border-charcoal-ink focus:outline-none focus:ring-2 focus:ring-charcoal-ink/20"
+                className="input-field"
                 placeholder="Contraseña"
                 required
               />
@@ -174,13 +180,13 @@ export default function AdminPage() {
               <button
                 type="submit"
                 disabled={loginSubmitting}
-                className="flex-1 px-4 py-3 rounded-lg bg-charcoal-ink text-soft-white font-medium hover:bg-graphite transition-colors disabled:opacity-60"
+                className="btn-primary flex-1"
               >
                 {loginSubmitting ? 'Entrando...' : 'Entrar'}
               </button>
               <Link
                 href="/"
-                className="flex-1 px-4 py-3 rounded-lg border-2 border-primary-text/20 text-primary-text font-medium hover:bg-light-ash/30 transition-colors text-center"
+                className="btn-secondary flex-1 text-center"
               >
                 Cancelar
               </Link>

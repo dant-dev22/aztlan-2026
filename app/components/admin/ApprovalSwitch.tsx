@@ -29,8 +29,8 @@ export default function ApprovalSwitch({ isApproved, onToggle, participantName }
         type="button"
         onClick={handleSwitchClick}
         className={`
-          relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-charcoal-ink focus:ring-offset-2
-          ${isApproved ? 'bg-success-green' : 'bg-disabled'}
+          relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-steel-gray focus:ring-offset-2
+          ${isApproved ? 'bg-electric-blue' : 'bg-disabled'}
         `}
         role="switch"
         aria-checked={isApproved}
@@ -38,7 +38,7 @@ export default function ApprovalSwitch({ isApproved, onToggle, participantName }
       >
         <span
           className={`
-            inline-block h-4 w-4 transform rounded-full bg-soft-white transition-transform
+            inline-block h-4 w-4 transform rounded-full bg-soft-white shadow-sm transition-transform
             ${isApproved ? 'translate-x-6' : 'translate-x-1'}
           `}
         />

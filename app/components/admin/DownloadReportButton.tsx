@@ -158,7 +158,7 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
       <button
         type="button"
         onClick={() => setModalOpen(true)}
-        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-charcoal-ink text-soft-white font-semibold hover:bg-graphite transition-colors border-2 border-charcoal-ink focus:outline-none focus:ring-2 focus:ring-graphite focus:ring-offset-2 focus:ring-offset-soft-white"
+        className="btn-accent"
         aria-label="Descargar reporte de participantes en CSV"
       >
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
@@ -169,19 +169,22 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
 
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} showCloseButton>
         <div className="space-y-6">
-          <h2 id="modal-reporte-titulo" className="text-xl font-bold text-primary-text pr-10">
-            Opciones del reporte
-          </h2>
-          <p className="text-secondary-text text-sm">
-            El archivo CSV se descargará con los participantes que cumplan los filtros seleccionados.
-          </p>
+          <div className="rounded-[24px] bg-charcoal-ink px-6 py-6 text-soft-white">
+            <p className="section-kicker mb-3 border-white/10 bg-white/10 text-blue-mist">Exportar datos</p>
+            <h2 id="modal-reporte-titulo" className="pr-10 text-xl font-black tracking-tight text-soft-white">
+              Opciones del reporte
+            </h2>
+            <p className="mt-2 text-sm text-white/72">
+              El archivo CSV se descargará con los participantes que cumplan los filtros seleccionados.
+            </p>
+          </div>
 
           <div role="group" aria-labelledby="modo-reporte-label">
             <span id="modo-reporte-label" className="block text-sm font-semibold text-primary-text mb-3">
               Formato del archivo
             </span>
             <div className="flex flex-col gap-3">
-              <label className="flex items-start gap-3 cursor-pointer text-secondary-text hover:text-primary-text">
+              <label className="surface-muted flex items-start gap-3 cursor-pointer p-4 text-secondary-text hover:text-primary-text">
                 <input
                   type="radio"
                   name="modo-reporte"
@@ -196,7 +199,7 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
                   </span>
                 </span>
               </label>
-              <label className="flex items-start gap-3 cursor-pointer text-secondary-text hover:text-primary-text">
+              <label className="surface-muted flex items-start gap-3 cursor-pointer p-4 text-secondary-text hover:text-primary-text">
                 <input
                   type="radio"
                   name="modo-reporte"
@@ -220,11 +223,11 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
             <span id="filtro-tipo-label" className="block text-sm font-semibold text-primary-text mb-3">
               Tipo de participante
             </span>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3">
               {TIPOS_PARTICIPANTE.map(({ value, label }) => (
                 <label
                   key={value}
-                  className="flex items-center gap-2 cursor-pointer text-secondary-text hover:text-primary-text"
+                  className="inline-flex items-center gap-2 rounded-full border border-primary-text/10 bg-light-ash/45 px-4 py-2 cursor-pointer text-secondary-text hover:text-primary-text"
                 >
                   <input
                     type="checkbox"
@@ -251,8 +254,8 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
                 En modo Lista final solo se exportan aprobados; este filtro no aplica.
               </p>
             )}
-            <div className="flex flex-wrap gap-4">
-              <label className="flex items-center gap-2 cursor-pointer text-secondary-text hover:text-primary-text">
+            <div className="flex flex-wrap gap-3">
+              <label className="inline-flex items-center gap-2 rounded-full border border-primary-text/10 bg-light-ash/45 px-4 py-2 cursor-pointer text-secondary-text hover:text-primary-text">
                 <input
                   type="radio"
                   name="filtro-comprobante"
@@ -263,7 +266,7 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
                 />
                 <span>Todos</span>
               </label>
-              <label className="flex items-center gap-2 cursor-pointer text-secondary-text hover:text-primary-text">
+              <label className="inline-flex items-center gap-2 rounded-full border border-primary-text/10 bg-light-ash/45 px-4 py-2 cursor-pointer text-secondary-text hover:text-primary-text">
                 <input
                   type="radio"
                   name="filtro-comprobante"
@@ -274,7 +277,7 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
                 />
                 <span>Solo con comprobante aprobado</span>
               </label>
-              <label className="flex items-center gap-2 cursor-pointer text-secondary-text hover:text-primary-text">
+              <label className="inline-flex items-center gap-2 rounded-full border border-primary-text/10 bg-light-ash/45 px-4 py-2 cursor-pointer text-secondary-text hover:text-primary-text">
                 <input
                   type="radio"
                   name="filtro-comprobante"
@@ -298,14 +301,14 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
               type="button"
               onClick={handleDescargar}
               disabled={participantesFiltrados.length === 0}
-              className="px-5 py-2.5 rounded-lg bg-success-green text-soft-white font-semibold hover:bg-success-green-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-success-green focus:ring-offset-2"
+              className="btn-primary disabled:cursor-not-allowed disabled:opacity-50"
             >
               Descargar CSV
             </button>
             <button
               type="button"
               onClick={() => setModalOpen(false)}
-              className="px-5 py-2.5 rounded-lg border-2 border-graphite text-primary-text font-semibold hover:bg-light-ash transition-colors focus:outline-none focus:ring-2 focus:ring-graphite focus:ring-offset-2"
+              className="btn-secondary"
             >
               Cancelar
             </button>

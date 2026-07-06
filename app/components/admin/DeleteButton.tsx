@@ -20,7 +20,7 @@ export default function DeleteButton({ onDelete, participantName }: DeleteButton
     <>
       <button
         onClick={() => setShowConfirm(true)}
-        className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+        className="rounded-xl border border-red-200 p-2 text-red-600 transition-colors hover:bg-red-50 hover:text-red-700"
         aria-label={`Eliminar ${participantName}`}
       >
         <svg

@@ -1,4 +1,5 @@
 import RegistroForm from '@/app/components/RegistroForm'
+import Footer from '@/app/components/Footer'
 import Header from '@/app/components/Header'
 import RegistroCerrado from '@/app/components/RegistroCerrado'
 import { REGISTRO_ABIERTO } from '@/app/lib/registroConfig'
@@ -11,11 +12,10 @@ export const metadata: Metadata = {
 
 export default function RegistroJuvenil() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="page-shell min-h-screen flex flex-col">
       <Header showBackButton backHref="/" />
 
-      {/* Main */}
-      <main className="flex-1 py-8 px-4 sm:px-6 lg:px-8">
+      <main className="flex-1 px-4 py-10 sm:px-6 lg:px-8">
         {REGISTRO_ABIERTO ? (
           <RegistroForm tipoRegistro="juvenil" />
         ) : (
@@ -25,11 +25,7 @@ export default function RegistroJuvenil() {
         )}
       </main>
 
-      <footer className="bg-light-ash/30 text-muted-text py-6 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center text-sm">
-          <p>&copy; 2026 Aztlan. Todos los derechos reservados.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

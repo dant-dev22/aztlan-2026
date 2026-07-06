@@ -17,9 +17,10 @@ export default function ModalExitoRegistro({
 }: ModalExitoRegistroProps) {
   return (
     <div className="flex flex-col items-center text-center animate-fade-in" role="status" aria-live="polite">
-      <AppLogo size={80} className="mb-4" />
-      {/* Icono de éxito */}
-      <div className="flex items-center justify-center mb-6 text-orange-500">
+      <div className="mb-4 rounded-2xl border border-primary-text/10 bg-light-ash/45 p-3">
+        <AppLogo size={80} />
+      </div>
+      <div className="mb-6 flex items-center justify-center text-signal-orange">
         <svg
           className="w-16 h-16"
           fill="none"
@@ -37,36 +38,33 @@ export default function ModalExitoRegistro({
         </svg>
       </div>
 
-      {/* Título de felicitación */}
-      <h2 className="text-2xl sm:text-3xl font-bold mb-3 text-primary-text">
+      <p className="section-kicker mb-3">Registro iniciado</p>
+      <h2 className="mb-3 text-2xl font-black tracking-tight text-primary-text sm:text-3xl">
         ¡Felicidades {nombreParticipante}!
       </h2>
 
-      {/* Mensaje de éxito */}
-      <p className="text-lg mb-6 text-secondary-text">
+      <p className="mb-6 text-lg text-secondary-text">
         Tu registro ha sido comenzado con éxito
       </p>
 
-      {/* Aztlan ID destacado */}
-      <div className="bg-orange-50 border-2 border-orange-400 rounded-xl px-6 py-4 mb-6 w-full max-w-md">
+      <div className="mb-6 w-full max-w-md rounded-[24px] border border-signal-orange/25 bg-signal-orange-soft px-6 py-5 shadow-[0_16px_28px_rgba(255,122,26,0.10)]">
         <p className="text-sm font-medium mb-2 text-secondary-text">Este es tu Aztlan ID:</p>
-        <p className="text-2xl font-bold tracking-wider font-mono text-orange-600 break-all">
+        <p className="break-all font-mono text-2xl font-bold tracking-wider text-signal-orange">
           {aztlanId}
         </p>
         <p className="text-xs text-secondary-text mt-2">Guárdalo en un lugar seguro</p>
       </div>
 
-      {/* Instrucciones de depósito */}
-      <div className="bg-warm-white border-2 border-primary-text/10 rounded-xl p-6 mb-6 w-full max-w-md text-left">
+      <div className="surface-muted mb-6 w-full max-w-md p-6 text-left">
         <h3 className="text-lg font-semibold text-primary-text mb-4 flex items-center gap-2">
-          <svg className="w-5 h-5 text-charcoal-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <svg className="h-5 w-5 text-steel-gray" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
           </svg>
           Próximos pasos
         </h3>
         <ol className="space-y-3 text-sm text-secondary-text">
           <li className="flex gap-3">
-            <span className="flex-shrink-0 w-6 h-6 rounded-full bg-charcoal-ink text-soft-white flex items-center justify-center font-semibold text-xs">
+            <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-steel-gray text-soft-white font-semibold text-xs">
               1
             </span>
             <span>
@@ -74,7 +72,7 @@ export default function ModalExitoRegistro({
             </span>
           </li>
           <li className="flex gap-3">
-            <span className="flex-shrink-0 w-6 h-6 rounded-full bg-charcoal-ink text-soft-white flex items-center justify-center font-semibold text-xs">
+            <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-steel-gray text-soft-white font-semibold text-xs">
               2
             </span>
             <span>
@@ -82,7 +80,7 @@ export default function ModalExitoRegistro({
             </span>
           </li>
           <li className="flex gap-3">
-            <span className="flex-shrink-0 w-6 h-6 rounded-full bg-charcoal-ink text-soft-white flex items-center justify-center font-semibold text-xs">
+            <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-steel-gray text-soft-white font-semibold text-xs">
               3
             </span>
             <span>
@@ -92,11 +90,10 @@ export default function ModalExitoRegistro({
         </ol>
       </div>
 
-      {/* Botón para subir comprobante */}
       <button
         type="button"
         onClick={onSubirComprobante}
-        className="w-full max-w-md py-4 px-6 rounded-xl font-semibold text-base transition-all duration-300 bg-success-green text-soft-white hover:bg-success-green-hover shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+        className="btn-accent w-full max-w-md py-4"
       >
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -104,11 +101,10 @@ export default function ModalExitoRegistro({
         Subir comprobante de pago
       </button>
 
-      {/* Botón secundario para cerrar */}
       <button
         type="button"
         onClick={onClose}
-        className="mt-4 text-sm text-secondary-text hover:text-primary-text underline underline-offset-2 transition-colors"
+        className="mt-4 text-sm text-secondary-text underline underline-offset-2 transition-colors hover:text-primary-text"
       >
         Cerrar
       </button>

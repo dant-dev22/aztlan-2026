@@ -212,117 +212,123 @@ export default function RegistroForm({
 
   return (
     <div className="w-full">
-      <div className="bg-warm-white rounded-2xl shadow-lg p-6 sm:p-8 lg:p-10">
-        <div className="mb-8 flex flex-col items-center text-center">
-          <AppLogo size={120} className="mb-4" />
-          <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-primary-text">
+      <div className="surface-panel overflow-hidden">
+        <div className="bg-charcoal-ink px-6 py-8 text-center text-soft-white sm:px-8 lg:px-10">
+          <div className="mx-auto mb-4 w-fit rounded-2xl border border-white/10 bg-white/5 p-3">
+            <AppLogo size={104} />
+          </div>
+          <p className="section-kicker mb-4 border-white/10 bg-white/10 text-blue-mist">Registro Aztlan</p>
+          <h1 className="mb-4 text-2xl font-black tracking-tight text-soft-white sm:text-3xl">
             {tituloDefault}
           </h1>
-          <p className="text-base sm:text-lg text-secondary-text">{descripcionDefault}</p>
+          <p className="mx-auto max-w-2xl text-base text-white/72 sm:text-lg">{descripcionDefault}</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Nombre Completo - Todos los formularios */}
-          <div>
-            <label
-              htmlFor="nombreCompleto"
-              className="block text-sm font-medium text-primary-text mb-2"
-            >
-              Nombre Completo *
-            </label>
-            <input
-              type="text"
-              id="nombreCompleto"
-              name="nombreCompleto"
-              value={formData.nombreCompleto}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-3 rounded-lg border-2 border-primary-text/20 focus:border-steel-gray focus:outline-none transition-colors duration-300 bg-soft-white"
-              placeholder="Ingresa tu nombre completo"
-            />
-          </div>
+        <div className="px-6 py-6 sm:px-8 lg:px-10 lg:py-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid gap-6 md:grid-cols-2">
+              {/* Nombre Completo - Todos los formularios */}
+              <div className="md:col-span-2">
+                <label
+                  htmlFor="nombreCompleto"
+                  className="mb-2 block text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text"
+                >
+                  Nombre Completo *
+                </label>
+                <input
+                  type="text"
+                  id="nombreCompleto"
+                  name="nombreCompleto"
+                  value={formData.nombreCompleto}
+                  onChange={handleChange}
+                  required
+                  className="input-field"
+                  placeholder="Ingresa tu nombre completo"
+                />
+              </div>
 
-          {/* Correo Electrónico - Todos los formularios */}
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-primary-text mb-2"
-            >
-              Correo Electrónico *
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-3 rounded-lg border-2 border-primary-text/20 focus:border-steel-gray focus:outline-none transition-colors duration-300 bg-soft-white"
-              placeholder="tu@email.com"
-            />
-          </div>
+              {/* Correo Electrónico - Todos los formularios */}
+              <div>
+                <label
+                  htmlFor="email"
+                  className="mb-2 block text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text"
+                >
+                  Correo Electrónico *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="input-field"
+                  placeholder="tu@email.com"
+                />
+              </div>
 
-          {/* Equipo - Requerido para todos los participantes */}
-          <div>
-            <label
-              htmlFor="equipo"
-              className="block text-sm font-medium text-primary-text mb-2"
-            >
-              Equipo *
-            </label>
-            <input
-              type="text"
-              id="equipo"
-              name="equipo"
-              value={formData.equipo}
-              onChange={handleChange}
-              required
-              className={`w-full px-4 py-3 rounded-lg border-2 focus:outline-none transition-colors duration-300 bg-soft-white ${
-                submitStatus === 'error' || (!formData.equipo?.trim() && submitAttempted)
-                  ? 'border-red-500 focus:border-red-500'
-                  : 'border-primary-text/20 focus:border-steel-gray'
-              }`}
-              placeholder="Nombre del equipo"
-            />
-          </div>
+              {/* Equipo - Requerido para todos los participantes */}
+              <div>
+                <label
+                  htmlFor="equipo"
+                  className="mb-2 block text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text"
+                >
+                  Equipo *
+                </label>
+                <input
+                  type="text"
+                  id="equipo"
+                  name="equipo"
+                  value={formData.equipo}
+                  onChange={handleChange}
+                  required
+                  className={`input-field ${
+                    submitStatus === 'error' || (!formData.equipo?.trim() && submitAttempted)
+                      ? 'border-red-500 focus:border-red-500 focus:ring-red-500/10'
+                      : ''
+                  }`}
+                  placeholder="Nombre del equipo"
+                />
+              </div>
 
-          {/* Cinta - Requerido para todos los participantes (select según tipo) */}
-          <div>
-            <label
-              htmlFor="cinta"
-              className="block text-sm font-medium text-primary-text mb-2"
-            >
-              Cinta *
-            </label>
-            <select
-              id="cinta"
-              name="cinta"
-              value={formData.cinta}
-              onChange={handleChange}
-              required
-              className={`w-full px-4 py-3 rounded-lg border-2 focus:outline-none transition-colors duration-300 bg-soft-white ${
-                submitStatus === 'error' || (!formData.cinta?.trim() && submitAttempted)
-                  ? 'border-red-500 focus:border-red-500'
-                  : 'border-primary-text/20 focus:border-steel-gray'
-              }`}
-            >
-              <option value="">Elige tu cinta</option>
-              {(esAdultosMasters ? cintasAdultosMasters : cintasNinosJuveniles).map((cinta) => (
-                <option key={cinta} value={cinta.toLowerCase()}>
-                  {cinta}
-                </option>
-              ))}
-            </select>
-          </div>
+              {/* Cinta - Requerido para todos los participantes (select según tipo) */}
+              <div className="md:col-span-2">
+                <label
+                  htmlFor="cinta"
+                  className="mb-2 block text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text"
+                >
+                  Cinta *
+                </label>
+                <select
+                  id="cinta"
+                  name="cinta"
+                  value={formData.cinta}
+                  onChange={handleChange}
+                  required
+                  className={`input-field ${
+                    submitStatus === 'error' || (!formData.cinta?.trim() && submitAttempted)
+                      ? 'border-red-500 focus:border-red-500 focus:ring-red-500/10'
+                      : ''
+                  }`}
+                >
+                  <option value="">Elige tu cinta</option>
+                  {(esAdultosMasters ? cintasAdultosMasters : cintasNinosJuveniles).map((cinta) => (
+                    <option key={cinta} value={cinta.toLowerCase()}>
+                      {cinta}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
 
           {/* Campos específicos para Infantil y Juvenil */}
           {esInfantilJuvenil && (
-            <>
+            <div className="grid gap-6 md:grid-cols-2">
               {/* Sexo */}
               <div>
                 <label
                   htmlFor="sexo"
-                  className="block text-sm font-medium text-primary-text mb-2"
+                  className="mb-2 block text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text"
                 >
                   Sexo *
                 </label>
@@ -332,7 +338,7 @@ export default function RegistroForm({
                   value={formData.sexo}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg border-2 border-primary-text/20 focus:border-steel-gray focus:outline-none transition-colors duration-300 bg-soft-white"
+                  className="input-field"
                 >
                   <option value="">Selecciona una opción</option>
                   <option value="masculino">Masculino</option>
@@ -344,7 +350,7 @@ export default function RegistroForm({
               <div>
                 <label
                   htmlFor="nivelExperiencia"
-                  className="block text-sm font-medium text-primary-text mb-2"
+                  className="mb-2 block text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text"
                 >
                   Nivel de Experiencia *
                 </label>
@@ -354,7 +360,7 @@ export default function RegistroForm({
                   value={formData.nivelExperiencia}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg border-2 border-primary-text/20 focus:border-steel-gray focus:outline-none transition-colors duration-300 bg-soft-white"
+                  className="input-field"
                 >
                   <option value="">Selecciona una opción</option>
                   {nivelesExperienciaInfantilJuvenil.map((nivel) => (
@@ -369,7 +375,7 @@ export default function RegistroForm({
               <div>
                 <label
                   htmlFor="categoriaEdad"
-                  className="block text-sm font-medium text-primary-text mb-2"
+                  className="mb-2 block text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text"
                 >
                   Categoría de Edad *
                 </label>
@@ -379,7 +385,7 @@ export default function RegistroForm({
                   value={formData.categoriaEdad}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg border-2 border-primary-text/20 focus:border-steel-gray focus:outline-none transition-colors duration-300 bg-soft-white"
+                  className="input-field"
                 >
                   <option value="">Selecciona una opción</option>
                   {categoriasEdadInfantilJuvenil.map((categoria) => (
@@ -394,7 +400,7 @@ export default function RegistroForm({
               <div>
                 <label
                   htmlFor="categoriaPeso"
-                  className="block text-sm font-medium text-primary-text mb-2"
+                  className="mb-2 block text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text"
                 >
                   Categoría de Peso (kg) *
                 </label>
@@ -404,7 +410,7 @@ export default function RegistroForm({
                   value={formData.categoriaPeso}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg border-2 border-primary-text/20 focus:border-steel-gray focus:outline-none transition-colors duration-300 bg-soft-white"
+                  className="input-field"
                 >
                   <option value="">Selecciona una opción</option>
                   {categoriasPesoInfantilJuvenil.map((peso) => (
@@ -414,17 +420,17 @@ export default function RegistroForm({
                   ))}
                 </select>
               </div>
-            </>
+            </div>
           )}
 
           {/* Campos específicos para Adultos y Masters */}
           {esAdultosMasters && (
-            <>
+            <div className="grid gap-6 md:grid-cols-2">
               {/* Edad */}
               <div>
                 <label
                   htmlFor="edad"
-                  className="block text-sm font-medium text-primary-text mb-2"
+                  className="mb-2 block text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text"
                 >
                   Edad *
                 </label>
@@ -436,7 +442,7 @@ export default function RegistroForm({
                   onChange={handleChange}
                   required
                   min="18"
-                  className="w-full px-4 py-3 rounded-lg border-2 border-primary-text/20 focus:border-steel-gray focus:outline-none transition-colors duration-300 bg-soft-white"
+                  className="input-field"
                   placeholder="Ingresa tu edad"
                 />
               </div>
@@ -445,7 +451,7 @@ export default function RegistroForm({
               <div>
                 <label
                   htmlFor="sexo"
-                  className="block text-sm font-medium text-primary-text mb-2"
+                  className="mb-2 block text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text"
                 >
                   Sexo *
                 </label>
@@ -455,7 +461,7 @@ export default function RegistroForm({
                   value={formData.sexo}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg border-2 border-primary-text/20 focus:border-steel-gray focus:outline-none transition-colors duration-300 bg-soft-white"
+                  className="input-field"
                 >
                   <option value="">Selecciona una opción</option>
                   <option value="masculino">Masculino</option>
@@ -467,7 +473,7 @@ export default function RegistroForm({
               <div>
                 <label
                   htmlFor="nivelExperiencia"
-                  className="block text-sm font-medium text-primary-text mb-2"
+                  className="mb-2 block text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text"
                 >
                   Nivel de Experiencia *
                 </label>
@@ -477,7 +483,7 @@ export default function RegistroForm({
                   value={formData.nivelExperiencia}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg border-2 border-primary-text/20 focus:border-steel-gray focus:outline-none transition-colors duration-300 bg-soft-white"
+                  className="input-field"
                 >
                   <option value="">Selecciona una opción</option>
                   {nivelesExperienciaAdultosMasters.map((nivel) => (
@@ -489,12 +495,12 @@ export default function RegistroForm({
               </div>
 
               {/* Categoría de Peso con Pestañas */}
-              <div>
-                <label className="block text-sm font-medium text-primary-text mb-2">
+              <div className="md:col-span-2">
+                <label className="mb-2 block text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text">
                   Categoría de Peso (kg) *
                 </label>
                 {/* Pestañas */}
-                <div className="flex gap-2 mb-4 border-b-2 border-primary-text/20">
+                <div className="mb-4 inline-flex rounded-2xl border border-primary-text/10 bg-light-ash/60 p-1">
                   <button
                     type="button"
                     onClick={() => {
@@ -502,10 +508,10 @@ export default function RegistroForm({
                       setFormData((prev) => ({ ...prev, categoriaPeso: '' }))
                     }}
                     className={`
-                      px-6 py-3 font-medium transition-colors duration-300
+                      rounded-2xl px-5 py-2.5 font-semibold transition-colors duration-300
                       ${
                         pesoTab === 'varonil'
-                          ? 'border-b-2 border-charcoal-ink text-charcoal-ink'
+                          ? 'bg-warm-white text-electric-blue shadow-sm'
                           : 'text-secondary-text hover:text-primary-text'
                       }
                     `}
@@ -519,10 +525,10 @@ export default function RegistroForm({
                       setFormData((prev) => ({ ...prev, categoriaPeso: '' }))
                     }}
                     className={`
-                      px-6 py-3 font-medium transition-colors duration-300
+                      rounded-2xl px-5 py-2.5 font-semibold transition-colors duration-300
                       ${
                         pesoTab === 'femenil'
-                          ? 'border-b-2 border-charcoal-ink text-charcoal-ink'
+                          ? 'bg-warm-white text-signal-orange shadow-sm'
                           : 'text-secondary-text hover:text-primary-text'
                       }
                     `}
@@ -538,7 +544,7 @@ export default function RegistroForm({
                   value={formData.categoriaPeso}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg border-2 border-primary-text/20 focus:border-steel-gray focus:outline-none transition-colors duration-300 bg-soft-white"
+                  className="input-field"
                 >
                   <option value="">Selecciona una opción</option>
                   {(pesoTab === 'varonil'
@@ -551,7 +557,7 @@ export default function RegistroForm({
                   ))}
                 </select>
               </div>
-            </>
+            </div>
           )}
 
           {/* Botón de envío */}
@@ -560,13 +566,13 @@ export default function RegistroForm({
               type="submit"
               disabled={isSubmitting}
               className={`
-                w-full py-4 px-6 rounded-lg font-semibold text-lg
+                w-full rounded-2xl px-6 py-4 text-lg font-semibold
                 transition-all duration-300 ease-in-out
                 transform hover:scale-105 active:scale-95
                 ${
                   isSubmitting
                     ? 'bg-disabled cursor-not-allowed text-muted-text'
-                    : 'bg-charcoal-ink text-soft-white hover:bg-steel-gray hover:shadow-xl'
+                    : 'bg-charcoal-ink text-soft-white hover:bg-electric-blue hover:shadow-[0_18px_34px_rgba(47,109,246,0.24)]'
                 }
               `}
             >
@@ -577,8 +583,8 @@ export default function RegistroForm({
           {/* Mensajes de estado - Solo mostrar si no hay callback para modal */}
           {submitStatus === 'success' && respuestaBackend && !onRegistroExitoso && (
             <div ref={successMessageRef} className="flex justify-center items-center my-8">
-              <div className="w-full max-w-lg bg-white text-primary-text px-8 py-6 rounded-2xl shadow-2xl text-center animate-fade-in border-2 border-graphite/30">
-                <div className="flex items-center justify-center mb-4 text-orange-500">
+              <div className="surface-panel w-full max-w-lg border border-signal-orange/20 px-8 py-6 text-center animate-fade-in">
+                <div className="mb-4 flex items-center justify-center text-signal-orange">
                   <svg
                     className="w-12 h-12"
                     fill="none"
@@ -600,9 +606,9 @@ export default function RegistroForm({
                 <p className="text-lg mb-4 text-secondary-text">
                   Tu registro ha sido comenzado con éxito!
                 </p>
-                <div className="bg-orange-50 border-2 border-orange-400 rounded-xl px-4 py-3 mb-3">
+                <div className="mb-3 rounded-2xl border border-signal-orange/25 bg-signal-orange-soft px-4 py-3">
                   <p className="text-sm font-medium mb-1 text-secondary-text">Este es tu Aztlan ID:</p>
-                  <p className="text-2xl font-bold tracking-wider font-mono text-orange-600">
+                  <p className="text-2xl font-bold tracking-wider font-mono text-signal-orange">
                     {respuestaBackend.aztlan_id}
                   </p>
                 </div>
@@ -614,11 +620,12 @@ export default function RegistroForm({
           )}
 
           {submitStatus === 'error' && (
-            <div className="mt-4 p-4 bg-light-ash border-2 border-graphite rounded-lg text-primary-text text-center">
+            <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-4 text-center text-primary-text">
               Hubo un error al enviar el registro. Por favor, intenta de nuevo.
             </div>
           )}
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   )

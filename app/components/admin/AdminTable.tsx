@@ -39,14 +39,14 @@ export default function AdminTable({ usuarios, onApprove, onDelete, onViewCompro
 
   if (usuarios.length === 0) {
     return (
-      <div className="text-center py-12">
+      <div className="surface-panel text-center py-12">
         <p className="text-secondary-text text-lg">No hay participantes registrados</p>
       </div>
     )
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg border-2 border-primary-text/10 bg-warm-white">
+    <div className="surface-panel overflow-x-auto">
       <table className="w-full">
         <thead className="bg-charcoal-ink text-soft-white">
           <tr>
@@ -61,13 +61,13 @@ export default function AdminTable({ usuarios, onApprove, onDelete, onViewCompro
             <th className="px-4 py-3 text-center text-sm font-semibold">Acciones</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-primary-text/10">
+        <tbody className="divide-y divide-primary-text/8">
           {usuarios.map((usuario) => (
             <tr
               key={usuario.id}
-              className="hover:bg-light-ash/30 transition-colors"
+              className="transition-colors hover:bg-blue-mist/45"
             >
-              <td className="px-4 py-3 text-sm text-primary-text font-medium">
+              <td className="px-4 py-3 text-sm font-semibold text-primary-text">
                 {usuario.nombreCompleto}
               </td>
               <td className="px-4 py-3 text-sm text-secondary-text">
@@ -89,7 +89,7 @@ export default function AdminTable({ usuarios, onApprove, onDelete, onViewCompro
                 {onViewComprobante ? (
                   <button
                     onClick={() => onViewComprobante(usuario.id)}
-                    className="text-charcoal-ink hover:text-graphite underline text-sm font-medium transition-colors"
+                    className="text-sm font-medium text-electric-blue underline transition-colors hover:text-steel-gray"
                   >
                     Ver
                   </button>

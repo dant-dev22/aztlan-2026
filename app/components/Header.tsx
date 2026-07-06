@@ -20,23 +20,29 @@ export default function Header({
   centered = true,
 }: HeaderProps) {
   return (
-    <header className="bg-light-ash text-primary-text py-6 px-4 sm:px-6 lg:px-8 border-b border-steel-gray/30">
+    <header className="relative overflow-hidden border-b border-white/10 bg-charcoal-ink text-soft-white">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(47,109,246,0.22),transparent_32%),radial-gradient(circle_at_top_right,rgba(255,122,26,0.18),transparent_26%)]" aria-hidden />
       <div
-        className={`max-w-7xl mx-auto flex items-center gap-4 ${
+        className={`relative max-w-7xl mx-auto flex items-center gap-4 px-4 py-6 sm:px-6 lg:px-8 ${
           showBackButton ? 'justify-between' : centered ? 'justify-center' : 'justify-start'
         }`}
       >
         <div className="flex items-center gap-4">
-          <AppLogo size={120} priority className="flex-shrink-0" />
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-2 shadow-[0_10px_30px_rgba(0,0,0,0.22)]">
+            <AppLogo size={108} priority className="flex-shrink-0" />
+          </div>
           <div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">{title}</h1>
-            {subtitle && <p className="text-sm sm:text-base text-secondary-text mt-1">{subtitle}</p>}
+            <p className="section-kicker mb-2 border-white/10 bg-white/10 text-blue-mist">
+              Aztlan BJJ 2026
+            </p>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight">{title}</h1>
+            {subtitle && <p className="mt-1 text-sm sm:text-base text-white/70">{subtitle}</p>}
           </div>
         </div>
         {showBackButton && (
           <Link
             href={backHref}
-            className="text-sm sm:text-base text-primary-text hover:text-charcoal-ink transition-colors duration-300 flex-shrink-0"
+            className="inline-flex flex-shrink-0 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm sm:text-base text-white/80 transition duration-300 hover:border-white/20 hover:bg-white/10 hover:text-soft-white"
           >
             ← Volver
           </Link>

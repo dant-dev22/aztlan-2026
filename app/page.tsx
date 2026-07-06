@@ -62,9 +62,9 @@ export default function Home() {
 
   if (!REGISTRO_ABIERTO) {
     return (
-      <div className="min-h-screen flex flex-col">
+      <div className="page-shell min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1 py-8 px-4 sm:px-6 lg:px-8">
+        <main className="flex-1 px-4 py-10 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <RegistroCerrado variant="home" />
           </div>
@@ -75,22 +75,43 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="page-shell min-h-screen flex flex-col">
       <Header />
 
-      <main className="flex-1 py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      <main className="flex-1 px-4 py-10 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto space-y-10">
           {vista === 'principal' && (
             <>
-              <section className="mb-12 animate-fade-in">
-                <InstruccionesRegistro />
+              <section className="surface-panel-dark animate-fade-in overflow-hidden px-6 py-8 sm:px-8 lg:px-12">
+                <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+                  <div>
+                    <p className="section-kicker mb-4 border-white/10 bg-white/10 text-blue-mist">
+                      Registro abierto
+                    </p>
+                    <h2 className="max-w-3xl text-4xl font-black tracking-tight text-soft-white sm:text-5xl lg:text-6xl">
+                      Diseñado para moverse rápido, registrarse fácil y competir con claridad.
+                    </h2>
+                    <p className="mt-5 max-w-2xl text-base leading-7 text-white/72 sm:text-lg">
+                      Inicia tu registro, guarda tu Aztlan ID y termina tu proceso cuando tengas el comprobante de pago.
+                    </p>
+                    <div className="mt-6 flex flex-wrap gap-3">
+                      <span className="status-badge border border-white/10 bg-white/8 text-white/75">Infantil y Juvenil</span>
+                      <span className="status-badge border border-white/10 bg-white/8 text-white/75">Adultos</span>
+                      <span className="status-badge border border-white/10 bg-white/8 text-white/75">Masters</span>
+                    </div>
+                  </div>
+                  <div className="surface-muted p-5 sm:p-6">
+                    <InstruccionesRegistro />
+                  </div>
+                </div>
               </section>
-              <section id="registro-participantes" className="text-center animate-fade-in scroll-mt-6" aria-labelledby="main-title">
-                <h2 id="main-title" className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-primary-text">
-                  Registro de Participantes
+              <section id="registro-participantes" className="surface-panel animate-fade-in scroll-mt-6 px-6 py-10 text-center sm:px-8 lg:px-12" aria-labelledby="main-title">
+                <p className="section-kicker mb-4">Flujo principal</p>
+                <h2 id="main-title" className="mb-4 text-3xl font-black tracking-tight text-primary-text sm:text-4xl lg:text-5xl">
+                  Registro de participantes
                 </h2>
-                <p className="text-lg sm:text-xl text-secondary-text max-w-2xl mx-auto mb-10">
-                  Inicia tu registro o envía tu comprobante de pago para completarlo.
+                <p className="mx-auto mb-10 max-w-2xl text-lg text-secondary-text sm:text-xl">
+                  Elige si quieres comenzar tu registro o terminarlo con tu comprobante de pago.
                 </p>
                 <BotonesFlujoPrincipal
                   onIniciarRegistro={() => setVista('cards')}

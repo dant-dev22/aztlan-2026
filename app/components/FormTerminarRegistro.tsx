@@ -134,7 +134,7 @@ export default function FormTerminarRegistro({ onClose, aztlanIdPrellenado }: Fo
     return (
       <div className="flex flex-col items-center justify-center py-16 px-6" aria-live="polite" aria-busy="true">
         <div
-          className="w-12 h-12 rounded-full border-4 border-charcoal-ink/20 border-t-charcoal-ink animate-spin"
+          className="h-12 w-12 rounded-full border-4 border-steel-gray/15 border-t-steel-gray animate-spin"
           role="status"
           aria-label="Cargando"
         />
@@ -146,11 +146,11 @@ export default function FormTerminarRegistro({ onClose, aztlanIdPrellenado }: Fo
   if (mostrarExito) {
     return (
       <div
-        className="flex flex-col items-center justify-center py-12 px-6 text-center animate-fade-in"
+        className="animate-fade-in flex flex-col items-center justify-center px-6 py-12 text-center"
         role="status"
         aria-live="polite"
       >
-        <div className="w-16 h-16 rounded-full bg-success-green flex items-center justify-center mb-4">
+        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-success-green shadow-[0_12px_24px_rgba(15,138,95,0.28)]">
           <svg className="w-8 h-8 text-soft-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
@@ -162,7 +162,7 @@ export default function FormTerminarRegistro({ onClose, aztlanIdPrellenado }: Fo
         <button
           type="button"
           onClick={onClose}
-          className="px-6 py-2 rounded-xl bg-charcoal-ink text-soft-white hover:bg-graphite transition-colors"
+          className="btn-primary"
         >
           Cerrar
         </button>
@@ -172,18 +172,24 @@ export default function FormTerminarRegistro({ onClose, aztlanIdPrellenado }: Fo
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="flex flex-col items-center mb-4">
-        <AppLogo size={120} className="mb-3" />
-        <h2 className="text-xl sm:text-2xl font-bold text-primary-text flex items-center gap-2">
-          <svg className="w-6 h-6 text-charcoal-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+      <div className="mb-4 rounded-[26px] bg-charcoal-ink px-6 py-8 text-center text-soft-white">
+        <div className="mx-auto mb-3 w-fit rounded-2xl border border-white/10 bg-white/5 p-3">
+          <AppLogo size={100} />
+        </div>
+        <p className="section-kicker mb-3 border-white/10 bg-white/10 text-blue-mist">Paso final</p>
+        <h2 className="flex items-center justify-center gap-2 text-xl font-black tracking-tight text-soft-white sm:text-2xl">
+          <svg className="w-6 h-6 text-signal-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
           Terminar registro
         </h2>
+        <p className="mt-3 text-sm text-white/70 sm:text-base">
+          Sube tu comprobante y finaliza el proceso de inscripción.
+        </p>
       </div>
 
       <div>
-        <label htmlFor="aztlan-id" className="block text-sm font-medium text-primary-text mb-2">
+        <label htmlFor="aztlan-id" className="mb-2 block text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text">
           Aztlan ID
         </label>
         <input
@@ -195,7 +201,7 @@ export default function FormTerminarRegistro({ onClose, aztlanIdPrellenado }: Fo
             setErrorValidacion(null)
           }}
           placeholder="Ej. AZT-2026-XXXX"
-          className="w-full px-4 py-3 rounded-xl border-2 border-primary-text/20 bg-soft-white text-primary-text placeholder-secondary-text/60 focus:border-charcoal-ink focus:outline-none focus:ring-2 focus:ring-charcoal-ink/20 transition-colors"
+          className="input-field"
           autoComplete="off"
           disabled={enviando}
           required
@@ -203,7 +209,7 @@ export default function FormTerminarRegistro({ onClose, aztlanIdPrellenado }: Fo
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-primary-text mb-2">
+        <label className="mb-2 block text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text">
           Comprobante de pago (captura de pantalla)
         </label>
         <p className="text-sm text-secondary-text mb-2">
@@ -221,36 +227,36 @@ export default function FormTerminarRegistro({ onClose, aztlanIdPrellenado }: Fo
         {!imagenPreview ? (
           <label
             htmlFor="comprobante-upload"
-            className="flex flex-col items-center justify-center w-full min-h-[160px] border-2 border-dashed border-steel-gray/50 rounded-xl cursor-pointer hover:border-charcoal-ink/40 hover:bg-light-ash/30 transition-colors"
+            className="flex min-h-[180px] w-full cursor-pointer flex-col items-center justify-center rounded-[24px] border-2 border-dashed border-steel-gray/25 bg-blue-mist/40 px-6 text-center transition-colors hover:border-steel-gray/45 hover:bg-blue-mist"
           >
             {imagenLoading ? (
               <>
                 <div
-                  className="w-10 h-10 rounded-full border-2 border-charcoal-ink/20 border-t-charcoal-ink animate-spin"
+                  className="h-10 w-10 rounded-full border-2 border-steel-gray/15 border-t-steel-gray animate-spin"
                   aria-hidden
                 />
                 <span className="mt-2 text-sm text-secondary-text">Cargando imagen…</span>
               </>
             ) : (
               <>
-                <svg className="w-10 h-10 text-muted-text mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+                <svg className="mb-2 h-10 w-10 text-steel-gray" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                <span className="text-sm text-secondary-text">Haz clic para subir tu comprobante</span>
+                <span className="text-sm font-medium text-primary-text">Haz clic para subir tu comprobante</span>
               </>
             )}
           </label>
         ) : (
-          <div className="relative rounded-xl overflow-hidden border-2 border-primary-text/10">
+          <div className="relative overflow-hidden rounded-[24px] border border-primary-text/10 shadow-sm">
             <img
               src={imagenPreview}
               alt="Vista previa del comprobante"
-              className="w-full max-h-64 object-contain bg-light-ash/50"
+              className="max-h-64 w-full object-contain bg-light-ash/50"
             />
             <button
               type="button"
               onClick={quitarImagen}
-              className="absolute top-2 right-2 w-8 h-8 rounded-full bg-charcoal-ink/80 text-soft-white flex items-center justify-center hover:bg-charcoal-ink transition-colors"
+              className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-charcoal-ink/88 text-soft-white transition-colors hover:bg-soft-black"
               aria-label="Quitar imagen"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -276,10 +282,10 @@ export default function FormTerminarRegistro({ onClose, aztlanIdPrellenado }: Fo
         type="submit"
         disabled={!canSubmit}
         className={`
-          w-full py-4 rounded-xl font-semibold text-base transition-all duration-300
+          w-full rounded-2xl py-4 text-base font-semibold transition-all duration-300
           flex items-center justify-center gap-2
           ${canSubmit
-            ? 'bg-success-green text-soft-white hover:bg-success-green-hover shadow-md hover:shadow-lg'
+            ? 'bg-signal-orange text-soft-white shadow-[0_16px_28px_rgba(255,122,26,0.25)] hover:bg-[#ef6d12] hover:shadow-[0_20px_34px_rgba(255,122,26,0.32)]'
             : 'bg-disabled text-muted-text cursor-not-allowed'
           }
           ${enviando ? 'opacity-70 cursor-wait' : ''}
