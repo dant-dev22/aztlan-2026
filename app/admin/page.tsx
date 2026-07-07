@@ -17,6 +17,7 @@ export default function AdminPage() {
   const [authStatus, setAuthStatus] = useState<'checking' | 'authenticated' | 'unauthenticated'>('checking')
   const [loginUser, setLoginUser] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [loginError, setLoginError] = useState('')
   const [loginSubmitting, setLoginSubmitting] = useState(false)
 
@@ -160,16 +161,36 @@ export default function AdminPage() {
               <label htmlFor="admin-password" className="mb-1 block text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text">
                 Contraseña
               </label>
-              <input
-                id="admin-password"
-                type="password"
-                value={loginPassword}
-                onChange={(e) => setLoginPassword(e.target.value)}
-                autoComplete="current-password"
-                className="input-field"
-                placeholder="Contraseña"
-                required
-              />
+              <div className="relative">
+                <input
+                  id="admin-password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                  autoComplete="current-password"
+                  className="input-field pr-12"
+                  placeholder="Contraseña"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute inset-y-0 right-0 flex items-center px-3 text-secondary-text transition-colors hover:text-primary-text"
+                  aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                  aria-pressed={showPassword}
+                >
+                  {showPassword ? (
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.477-10-10 0-1.058.164-2.078.468-3.035m3.28-2.844A9.959 9.959 0 0112 3c5.523 0 10 4.477 10 10 0 2.21-.716 4.252-1.93 5.91M15 12a3 3 0 11-6 0 3 3 0 016 0zm6 6L3 3" />
+                    </svg>
+                  ) : (
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  )}
+                </button>
+              </div>
             </div>
             {loginError && (
               <p className="text-sm text-red-600" role="alert">
