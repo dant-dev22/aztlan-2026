@@ -5,7 +5,7 @@ import ConfirmModal from './ConfirmModal'
 
 interface ApprovalSwitchProps {
   isApproved: boolean
-  onToggle: () => void
+  onToggle: (nextApproved: boolean) => void
   participantName: string
 }
 
@@ -13,15 +13,18 @@ export default function ApprovalSwitch({ isApproved, onToggle, participantName }
   const [showConfirm, setShowConfirm] = useState(false)
 
   const handleSwitchClick = () => {
-    if (!isApproved) {
-      setShowConfirm(true)
-    }
+    setShowConfirm(true)
   }
 
   const handleConfirm = () => {
-    onToggle()
-    setShowConfirm(false)
+    onToggle(!isApproved)
   }
+
+  const confirmationTitle = isApproved ? 'Confirmar cancelación' : 'Confirmar aprobación'
+  const confirmationMessage = isApproved
+    ? '¿Estás seguro en cancelar este registro?'
+    : '¿Estás seguro en aprobar este registro?'
+  const confirmText = isApproved ? 'Sí, cancelar' : 'Sí, aprobar'
 
   return (
     <>
@@ -47,9 +50,9 @@ export default function ApprovalSwitch({ isApproved, onToggle, participantName }
         isOpen={showConfirm}
         onClose={() => setShowConfirm(false)}
         onConfirm={handleConfirm}
-        title="Confirmar aprobación"
-        message={`¿Está seguro de aprobar este comprobante?`}
-        confirmText="Sí, aprobar"
+        title={confirmationTitle}
+        message={confirmationMessage}
+        confirmText={confirmText}
         cancelText="Cancelar"
       />
     </>

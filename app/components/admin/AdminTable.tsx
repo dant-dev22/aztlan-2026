@@ -1,13 +1,12 @@
 'use client'
 
-import { useMemo } from 'react'
 import type { UsuarioCompleto } from '@/app/hooks/useUsers'
 import ApprovalSwitch from './ApprovalSwitch'
 import DeleteButton from './DeleteButton'
 
 interface AdminTableProps {
   usuarios: UsuarioCompleto[]
-  onApprove: (id: string) => void
+  onApprove: (id: string, comprobanteAprobado: boolean) => void
   onDelete: (id: string) => void
   onViewComprobante?: (id: string) => void
 }
@@ -101,7 +100,7 @@ export default function AdminTable({ usuarios, onApprove, onDelete, onViewCompro
                 <div className="flex justify-center">
                   <ApprovalSwitch
                     isApproved={usuario.comprobanteAprobado || false}
-                    onToggle={() => onApprove(usuario.id)}
+                    onToggle={(nextApproved) => onApprove(usuario.id, nextApproved)}
                     participantName={usuario.nombreCompleto}
                   />
                 </div>

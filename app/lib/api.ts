@@ -55,6 +55,7 @@ export interface ComprobanteResponse {
 export interface UsuarioApi {
   id: string
   aztlan_id: string
+  torneo: string
   tipoRegistro: TipoRegistro
   nombreCompleto: string
   email: string
@@ -131,11 +132,11 @@ export async function getUsuarios(): Promise<UsuarioApi[]> {
   return request<UsuarioApi[]>('/usuarios', { method: 'GET' })
 }
 
-/** PATCH /usuarios/:id — Aprobar comprobante */
-export async function patchUsuarioAprobar(id: string): Promise<UsuarioApi> {
+/** PATCH /usuarios/:id — Actualizar aprobación del comprobante */
+export async function patchUsuarioAprobar(id: string, comprobanteAprobado: boolean): Promise<UsuarioApi> {
   return request<UsuarioApi>(`/usuarios/${encodeURIComponent(id)}`, {
     method: 'PATCH',
-    body: JSON.stringify({ comprobanteAprobado: true }),
+    body: JSON.stringify({ comprobanteAprobado }),
   })
 }
 

@@ -46,14 +46,14 @@ export function useUsers() {
     }
   }, [])
 
-  const aprobarComprobante = useCallback(async (id: string) => {
+  const aprobarComprobante = useCallback(async (id: string, comprobanteAprobado: boolean) => {
     try {
-      const actualizado = await patchUsuarioAprobar(id)
+      const actualizado = await patchUsuarioAprobar(id, comprobanteAprobado)
       setUsuarios((prev) =>
         prev.map((u) => (u.id === id ? normalizeUsuario(actualizado) : u))
       )
     } catch (err) {
-      console.error('Error al aprobar comprobante:', err)
+      console.error('Error al actualizar comprobante:', err)
     }
   }, [])
 

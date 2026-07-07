@@ -10,6 +10,7 @@ import Header from '@/app/components/Header'
 import Modal from '@/app/components/Modal'
 
 const AUTH_CHECK_URL = '/admin/auth'
+const ADMIN_TOURNAMENT = '2026-b'
 
 export default function AdminPage() {
   const { usuarios, loading, error, aprobarComprobante, eliminarUsuario, cargarUsuarios } = useUsers()
@@ -59,9 +60,10 @@ export default function AdminPage() {
   const showContent = authStatus === 'authenticated'
 
   const filtrados = useMemo(() => {
-    if (!busqueda.trim()) return usuarios
+    const usuariosDelTorneo = usuarios.filter((u) => u.torneo === ADMIN_TOURNAMENT)
+    if (!busqueda.trim()) return usuariosDelTorneo
     const q = busqueda.toLowerCase().trim()
-    return usuarios.filter(
+    return usuariosDelTorneo.filter(
       (u) =>
         u.nombreCompleto?.toLowerCase().includes(q) ||
         u.email?.toLowerCase().includes(q) ||
@@ -89,7 +91,7 @@ export default function AdminPage() {
             <div>
               <p className="section-kicker mb-3 border-white/10 bg-white/10 text-blue-mist">Dashboard</p>
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-soft-white">Panel de administración</h1>
-              <p className="mt-1 text-white/68">Participantes registrados y comprobantes</p>
+              <p className="mt-1 text-white/68">Participantes registrados y comprobantes del torneo {ADMIN_TOURNAMENT}</p>
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <Link
