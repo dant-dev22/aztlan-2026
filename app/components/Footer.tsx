@@ -1,10 +1,36 @@
 'use client'
 
+import Link from 'next/link'
+
 export default function Footer() {
   return (
     <footer className="mt-auto border-t border-primary-text/8 bg-warm-white/90 px-4 py-8 text-muted-text backdrop-blur sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="surface-muted flex flex-col items-center gap-4 px-6 py-6 text-center">
+        <div className="surface-muted flex flex-col items-center gap-6 px-6 py-6 text-center">
+          <nav className="flex flex-wrap items-center justify-center gap-4 sm:gap-6" aria-label="Enlaces del sitio">
+            <Link
+              href="/llaves-permitidas"
+              className="inline-flex items-center gap-2 text-sm text-secondary-text underline-offset-2 transition-colors hover:text-primary-text hover:underline"
+            >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Llaves permitidas (Reglamento)
+            </Link>
+            <span className="hidden sm:inline h-4 w-px bg-primary-text/20" aria-hidden="true" />
+            <Link
+              href="/lista-final"
+              className="inline-flex items-center gap-2 text-sm text-secondary-text underline-offset-2 transition-colors hover:text-primary-text hover:underline"
+            >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+              </svg>
+              Lista final
+            </Link>
+          </nav>
+
+          <div className="w-full border-t border-primary-text/8 py-2" aria-hidden="true" />
+
           <nav className="flex items-center gap-6" aria-label="Redes sociales">
             <a
               href="https://www.instagram.com/aztlan_bjj?igsh=MTNrMHMzMno5ZTgwdg=="

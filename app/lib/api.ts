@@ -73,6 +73,49 @@ export interface UsuarioApi {
   comprobanteUrl: string | null
 }
 
+export interface AsistenciaClase {
+  id: string
+  nombre: string
+  descripcion: string
+}
+
+export interface AsistenciaCatalogoResponse {
+  equipo: string
+  equipoSlug: string
+  sucursal: string
+  sucursalSlug: string
+  clases: AsistenciaClase[]
+}
+
+export interface AsistenciaPayload {
+  aztlan_id: string
+  equipo: string
+  sucursal: string
+  claseId: string
+  qrContent: string
+  timestamp?: string
+}
+
+export interface AsistenciaResponse {
+  success: boolean
+  message: string
+  attendance: {
+    id: string
+    registroId: string
+    aztlan_id: string
+    nombreCompleto: string
+    equipo: string
+    equipoSlug: string
+    sucursal: string
+    sucursalSlug: string
+    claseId: string
+    claseNombre: string
+    timestamp: string
+    fechaOperativa: string
+    createdAt: string | null
+  }
+}
+
 async function request<T>(
   path: string,
   options: RequestInit = {}
@@ -143,4 +186,22 @@ export async function patchUsuarioAprobar(id: string, comprobanteAprobado: boole
 /** DELETE /usuarios/:id — Eliminar usuario */
 export async function deleteUsuario(id: string): Promise<void> {
   await request(`/usuarios/${encodeURIComponent(id)}`, { method: 'DELETE' })
+}
+
+/** GET /asistencias/catalogo — Obtener clases disponibles por equipo/sucursal */
+export async function getAsistenciasCatalogo(equipo: string, sucursal: string): Promise<AsistenciaCatalogoResponse> {
+  const params = new URLSearchParams({ equipo, sucursal })
+  return request<AsistenciaCatalogoResponse>(`/asistencias/catalogo?${params.toString()}`, { method: 'GET' })
+}
+
+/** POST /asistencias — Registrar asistencia validando QR */
+export async function postAsistencia(payload: AsistenciaPayload): Promise<AsistenciaResponse> {
+  const body = {
+    ...payload,
+    timestamp: payload.timestamp ?? new Date().toISOString(),
+  }
+  return request<AsistenciaResponse>('/asistencias', {
+    method: 'POST',
+    body: JSON.stringify(body),
+  })
 }

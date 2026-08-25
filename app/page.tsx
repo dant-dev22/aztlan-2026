@@ -63,7 +63,7 @@ export default function Home() {
   if (!REGISTRO_ABIERTO) {
     return (
       <div className="page-shell min-h-screen flex flex-col">
-        <Header />
+        <Header navLinks={[{ href: '/llaves-permitidas', label: 'Llaves permitidas' }]} />
         <main className="flex-1 px-4 py-10 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <RegistroCerrado variant="home" />
@@ -76,7 +76,7 @@ export default function Home() {
 
   return (
     <div className="page-shell min-h-screen flex flex-col">
-      <Header />
+      <Header navLinks={[{ href: '/llaves-permitidas', label: 'Llaves permitidas' }]} />
 
       <main className="flex-1 px-4 py-10 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-10">

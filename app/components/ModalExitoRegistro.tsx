@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import AppLogo from './AppLogo'
 
 interface ModalExitoRegistroProps {
@@ -53,6 +54,30 @@ export default function ModalExitoRegistro({
           {aztlanId}
         </p>
         <p className="text-xs text-secondary-text mt-2">Guárdalo en un lugar seguro</p>
+      </div>
+
+      <div className="mb-5 w-full max-w-md rounded-[20px] border border-steel-gray/15 bg-blue-mist/60 px-5 py-4 text-left shadow-sm">
+        <Link
+          href="/llaves-permitidas"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-start gap-3 group"
+        >
+          <span className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-steel-gray text-soft-white shadow-sm">
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </span>
+          <div className="flex-1">
+            <p className="text-sm font-semibold text-primary-text group-hover:text-steel-gray transition-colors">
+              Revisa el reglamento: Llaves permitidas
+              <span className="ml-1 inline-block align-middle" aria-hidden="true">↗</span>
+            </p>
+            <p className="text-xs text-secondary-text mt-0.5">
+              Consulta qué técnicas están autorizadas según tu categoría.
+            </p>
+          </div>
+        </Link>
       </div>
 
       <div className="surface-muted mb-6 w-full max-w-md p-6 text-left">
