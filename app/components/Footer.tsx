@@ -9,13 +9,13 @@ export default function Footer() {
         <div className="surface-muted flex flex-col items-center gap-6 px-6 py-6 text-center">
           <nav className="flex flex-wrap items-center justify-center gap-4 sm:gap-6" aria-label="Enlaces del sitio">
             <Link
-              href="/llaves-permitidas"
+              href="/reglamento"
               className="inline-flex items-center gap-2 text-sm text-secondary-text underline-offset-2 transition-colors hover:text-primary-text hover:underline"
             >
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              Llaves permitidas (Reglamento)
+              Reglamento
             </Link>
             <span className="hidden sm:inline h-4 w-px bg-primary-text/20" aria-hidden="true" />
             <Link

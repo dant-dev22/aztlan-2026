@@ -44,7 +44,7 @@ const DATOS_TABLA: TecnicaRow[] = [
 ]
 
 export const metadata: Metadata = {
-  title: 'Llaves Permitidas - Reglamento Aztlán 2026',
+  title: 'Reglamento Oficial - Aztlán 2026',
   description: 'Técnicas permitidas y prohibidas por categoría de edad y nivel en el torneo Aztlán 2026',
 }
 
@@ -72,12 +72,12 @@ function IconoPermitido() {
   )
 }
 
-export default function LlavesPermitidasPage() {
+export default function ReglamentoPage() {
   return (
     <div className="page-shell min-h-screen flex flex-col">
       <Header
-        title="Llaves Permitidas"
-        subtitle="Reglamento Oficial Aztlán 2026"
+        title="Reglamento"
+        subtitle="Oficial Aztlán 2026"
         showBackButton={true}
         backHref="/"
         centered={false}

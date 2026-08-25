@@ -58,7 +58,7 @@ export default function ModalExitoRegistro({
 
       <div className="mb-5 w-full max-w-md rounded-[20px] border border-steel-gray/15 bg-blue-mist/60 px-5 py-4 text-left shadow-sm">
         <Link
-          href="/llaves-permitidas"
+          href="/reglamento"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-start gap-3 group"
@@ -70,7 +70,7 @@ export default function ModalExitoRegistro({
           </span>
           <div className="flex-1">
             <p className="text-sm font-semibold text-primary-text group-hover:text-steel-gray transition-colors">
-              Revisa el reglamento: Llaves permitidas
+              Revisa el reglamento oficial
               <span className="ml-1 inline-block align-middle" aria-hidden="true">↗</span>
             </p>
             <p className="text-xs text-secondary-text mt-0.5">
