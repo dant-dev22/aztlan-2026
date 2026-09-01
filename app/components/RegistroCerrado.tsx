@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 interface RegistroCerradoProps {
   /** En la portada usa más aire; en subrutas de registro un poco más compacto */
   variant?: 'home' | 'page'
@@ -32,17 +30,8 @@ export default function RegistroCerrado({ variant = 'home' }: RegistroCerradoPro
             El registro para Aztlán 2026 se ha cerrado
           </h2>
           <p className="text-base sm:text-lg text-secondary-text leading-relaxed mb-8">
-            Gracias por tu participación. Puedes consultar la lista final de participantes en el
-            enlace de abajo. Para novedades y comunicados oficiales, sigue las redes del torneo.
+            Gracias por tu participación. Para novedades y comunicados oficiales, sigue las redes del torneo.
           </p>
-          <div className="flex justify-center mb-8">
-            <Link
-              href="/lista-final"
-              className="btn-primary"
-            >
-              Ver lista final de participantes
-            </Link>
-          </div>
           <div className="border-t border-primary-text/10 pt-6">
             <p className="text-sm text-muted-text mb-4">Redes oficiales del torneo</p>
             <nav className="flex items-center justify-center gap-6" aria-label="Redes sociales de Aztlán">
