@@ -23,7 +23,7 @@ const DATOS_TABLA: TecnicaRow[] = [
   { tecnica: 'Guillotina, Anaconda, D’arce, Peruvian choke o cualquier variante de front head lock', prohibidaEn: ['infantiles'] },
   { tecnica: 'Omoplata', prohibidaEn: ['infantiles'] },
   { tecnica: 'Jalar la cabeza del oponente al hacer triángulo de piernas', prohibidaEn: ['infantiles'] },
-  { tecnica: 'Triángulo de brazo', prohibidaEn: ['infantiles', 'principiantes'] },
+  { tecnica: 'Triángulo de brazo', prohibidaEn: ['infantiles'] },
   { tecnica: 'Mano de vaca', prohibidaEn: ['infantiles', 'principiantes'] },
   { tecnica: 'Compresión a las costillas en guardia cerrada', prohibidaEn: ['infantiles', 'principiantes'] },
   { tecnica: 'Girar hacia el lado del pie que no se está atacando en los Aquiles', prohibidaEn: ['infantiles', 'principiantes', 'intermedios'] },
