@@ -18,8 +18,8 @@ interface RegistroFormProps {
 const categoriasEdadInfantilJuvenil = [
   { value: 'infantil-1', label: 'Infantil 1 (6-9 años)' },
   { value: 'infantil-2', label: 'Infantil 2 (10-12 años)' },
-  { value: 'adolescentes', label: 'Adolescentes (13-14 años)' },
-  { value: 'juveniles', label: 'Juveniles (15-17 años)' },
+  { value: 'adolescentes', label: 'Adolescentes (13-15 años)' },
+  { value: 'juveniles', label: 'Juveniles (16-17 años)' },
 ]
 
 const categoriasPesoInfantilJuvenil = [
@@ -27,6 +27,7 @@ const categoriasPesoInfantilJuvenil = [
   '-25',
   '-30',
   '-35',
+  '-40',
   '-45',
   '-50',
   '-55',

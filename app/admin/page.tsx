@@ -15,6 +15,10 @@ const ADMIN_TOURNAMENT = '2026-b'
 export default function AdminPage() {
   const { usuarios, loading, error, aprobarComprobante, eliminarUsuario, cargarUsuarios } = useUsers()
   const [busqueda, setBusqueda] = useState('')
+  const [filtroPago, setFiltroPago] = useState<string>('todos')
+  const [filtroPeso, setFiltroPeso] = useState<string>('todos')
+  const [filtroCategoria, setFiltroCategoria] = useState<string>('todos')
+  const [filtroTipo, setFiltroTipo] = useState<string>('todos')
   const [authStatus, setAuthStatus] = useState<'checking' | 'authenticated' | 'unauthenticated'>('checking')
   const [loginUser, setLoginUser] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
@@ -59,17 +63,42 @@ export default function AdminPage() {
   const showLoginModal = authStatus === 'unauthenticated'
   const showContent = authStatus === 'authenticated'
 
-  const filtrados = useMemo(() => {
+  const opcionesFiltro = useMemo(() => {
     const usuariosDelTorneo = usuarios.filter((u) => u.torneo === ADMIN_TOURNAMENT)
-    if (!busqueda.trim()) return usuariosDelTorneo
-    const q = busqueda.toLowerCase().trim()
-    return usuariosDelTorneo.filter(
-      (u) =>
-        u.nombreCompleto?.toLowerCase().includes(q) ||
-        u.email?.toLowerCase().includes(q) ||
-        u.aztlan_id?.toLowerCase().includes(q)
-    )
-  }, [usuarios, busqueda])
+    const pesos = Array.from(new Set(usuariosDelTorneo.map((u) => u.categoriaPeso).filter(Boolean) as string[]))
+    const categoriasEdad = Array.from(new Set(usuariosDelTorneo.map((u) => u.categoriaEdad).filter(Boolean) as string[]))
+    const tipos = Array.from(new Set(usuariosDelTorneo.map((u) => u.tipoRegistro)))
+    return { pesos, categoriasEdad, tipos }
+  }, [usuarios])
+
+  const filtrados = useMemo(() => {
+    let lista = usuarios.filter((u) => u.torneo === ADMIN_TOURNAMENT)
+    if (filtroPago !== 'todos') {
+      if (filtroPago === 'pagado') lista = lista.filter((u) => u.comprobanteAprobado === true)
+      if (filtroPago === 'no-pagado') lista = lista.filter((u) => u.comprobanteAprobado !== true)
+    }
+    if (filtroTipo !== 'todos') {
+      lista = lista.filter((u) => u.tipoRegistro === filtroTipo)
+    }
+    if (filtroPeso !== 'todos') {
+      lista = lista.filter((u) => u.categoriaPeso === filtroPeso)
+    }
+    if (filtroCategoria !== 'todos') {
+      lista = lista.filter(
+        (u) => u.categoriaEdad === filtroCategoria || u.categoriaPeso === filtroCategoria
+      )
+    }
+    if (busqueda.trim()) {
+      const q = busqueda.toLowerCase().trim()
+      lista = lista.filter(
+        (u) =>
+          u.nombreCompleto?.toLowerCase().includes(q) ||
+          u.email?.toLowerCase().includes(q) ||
+          u.aztlan_id?.toLowerCase().includes(q)
+      )
+    }
+    return lista
+  }, [usuarios, busqueda, filtroPago, filtroPeso, filtroCategoria, filtroTipo])
 
   const verComprobante = (id: string) => {
     const u = usuarios.find((x) => x.id === id)
@@ -117,8 +146,99 @@ export default function AdminPage() {
             </div>
           )}
 
-          <div className="mb-4">
+          <div className="mb-4 space-y-4">
             <SearchBar onSearch={setBusqueda} placeholder="Buscar por nombre, email o Aztlan ID..." />
+
+            <div className="surface-panel p-4">
+              <p className="mb-3 text-sm font-semibold uppercase tracking-[0.08em] text-secondary-text">
+                Filtros
+              </p>
+              <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+                <div>
+                  <label className="mb-1 block text-xs font-semibold text-muted-text">Estado de pago</label>
+                  <select
+                    value={filtroPago}
+                    onChange={(e) => setFiltroPago(e.target.value)}
+                    className="input-field"
+                  >
+                    <option value="todos">Todos</option>
+                    <option value="pagado">Pagado</option>
+                    <option value="no-pagado">No pagado</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="mb-1 block text-xs font-semibold text-muted-text">Tipo de registro</label>
+                  <select
+                    value={filtroTipo}
+                    onChange={(e) => setFiltroTipo(e.target.value)}
+                    className="input-field"
+                  >
+                    <option value="todos">Todos los tipos</option>
+                    {opcionesFiltro.tipos.map((tipo) => (
+                      <option key={tipo} value={tipo}>
+                        {tipo === 'juvenil' ? 'Infantil y Juvenil' : tipo === 'adultos' ? 'Adultos' : 'Masters'}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="mb-1 block text-xs font-semibold text-muted-text">Categoría de peso</label>
+                  <select
+                    value={filtroPeso}
+                    onChange={(e) => setFiltroPeso(e.target.value)}
+                    className="input-field"
+                  >
+                    <option value="todos">Todos los pesos</option>
+                    {opcionesFiltro.pesos.map((peso) => (
+                      <option key={peso} value={peso}>
+                        {peso} kg
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="mb-1 block text-xs font-semibold text-muted-text">Categoría de edad</label>
+                  <select
+                    value={filtroCategoria}
+                    onChange={(e) => setFiltroCategoria(e.target.value)}
+                    className="input-field"
+                  >
+                    <option value="todos">Todas las categorías</option>
+                    {opcionesFiltro.categoriasEdad.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat === 'infantil-1' ? 'Infantil 1 (6-9)' :
+                         cat === 'infantil-2' ? 'Infantil 2 (10-12)' :
+                         cat === 'adolescentes' ? 'Adolescentes (13-15)' :
+                         cat === 'juveniles' ? 'Juveniles (16-17)' : cat}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="mt-3 flex items-center justify-between border-t border-primary-text/8 pt-3">
+                <p className="text-sm text-secondary-text">
+                  Mostrando <span className="font-bold text-primary-text">{filtrados.length}</span> de {usuarios.filter(u => u.torneo === ADMIN_TOURNAMENT).length} participantes
+                </p>
+                {(filtroPago !== 'todos' || filtroTipo !== 'todos' || filtroPeso !== 'todos' || filtroCategoria !== 'todos' || busqueda.trim()) && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFiltroPago('todos')
+                      setFiltroTipo('todos')
+                      setFiltroPeso('todos')
+                      setFiltroCategoria('todos')
+                      setBusqueda('')
+                    }}
+                    className="text-sm font-semibold text-signal-orange transition-colors hover:underline"
+                  >
+                    Limpiar filtros
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
 
           {loading ? (
