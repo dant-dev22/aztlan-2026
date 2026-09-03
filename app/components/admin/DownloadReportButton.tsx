@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react'
 import Modal from '@/app/components/Modal'
 import type { UsuarioCompleto } from '@/app/hooks/useUsers'
 import type { TipoRegistro } from '@/app/lib/api'
+import { buildListaFinal, buildCsvListaFinal } from '@/app/lib/listaFinal'
 
 const TIPOS_PARTICIPANTE: { value: TipoRegistro; label: string }[] = [
   { value: 'juvenil', label: 'Infantil y Juvenil' },
@@ -12,6 +13,7 @@ const TIPOS_PARTICIPANTE: { value: TipoRegistro; label: string }[] = [
 ]
 
 type FiltroComprobante = 'todos' | 'aprobados' | 'pendientes'
+type ModoExportacion = 'reporte' | 'lista-final'
 
 interface DownloadReportButtonProps {
   usuarios: UsuarioCompleto[]
@@ -26,7 +28,7 @@ function escapeCsvCell(value: string | number | boolean | null | undefined): str
   return s
 }
 
-function buildCsv(usuarios: UsuarioCompleto[]): string {
+function buildCsvReporte(usuarios: UsuarioCompleto[]): string {
   const headers = [
     'ID',
     'Aztlan ID',
@@ -78,6 +80,7 @@ function triggerDownload(content: string, filename: string) {
 
 export default function DownloadReportButton({ usuarios }: DownloadReportButtonProps) {
   const [modalOpen, setModalOpen] = useState(false)
+  const [modo, setModo] = useState<ModoExportacion>('reporte')
   const [tiposSeleccionados, setTiposSeleccionados] = useState<Set<TipoRegistro>>(
     () => new Set<TipoRegistro>(['juvenil', 'adultos', 'masters'])
   )
@@ -92,7 +95,7 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
     })
   }
 
-  const participantesFiltrados = useMemo(() => {
+  const participantesReporte = useMemo(() => {
     return usuarios.filter((u) => {
       if (!tiposSeleccionados.has(u.tipoRegistro)) return false
       if (filtroComprobante === 'aprobados' && !u.comprobanteAprobado) return false
@@ -101,11 +104,23 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
     })
   }, [usuarios, tiposSeleccionados, filtroComprobante])
 
+  const categoriasListaFinal = useMemo(() => buildListaFinal(usuarios), [usuarios])
+  const totalListaFinal = useMemo(
+    () => categoriasListaFinal.reduce((sum, c) => sum + c.participantes.length, 0),
+    [categoriasListaFinal]
+  )
+
+  const contarParaDescarga = modo === 'reporte' ? participantesReporte.length : totalListaFinal
+
   const handleDescargar = () => {
     const fecha = new Date().toISOString().slice(0, 10)
-    const csv = buildCsv(participantesFiltrados)
-    const filename = `reporte-participantes-aztlan-2026-${fecha}.csv`
-    triggerDownload(csv, filename)
+    if (modo === 'reporte') {
+      const csv = buildCsvReporte(participantesReporte)
+      triggerDownload(csv, `reporte-participantes-aztlan-2026-${fecha}.csv`)
+    } else {
+      const csv = buildCsvListaFinal(categoriasListaFinal)
+      triggerDownload(csv, `lista-final-aztlan-2026-${fecha}.csv`)
+    }
     setModalOpen(false)
   }
 
@@ -131,80 +146,134 @@ export default function DownloadReportButton({ usuarios }: DownloadReportButtonP
               Opciones del reporte
             </h2>
             <p className="mt-2 text-sm text-white/72">
-              El archivo CSV se descargará con los participantes que cumplan los filtros seleccionados.
+              Elige qué formato quieres exportar y qué participantes incluir.
             </p>
           </div>
 
-          <div role="group" aria-labelledby="filtro-tipo-label">
-            <span id="filtro-tipo-label" className="block text-sm font-semibold text-primary-text mb-3">
-              Tipo de participante
+          <div role="radiogroup" aria-labelledby="modo-exportacion-label">
+            <span id="modo-exportacion-label" className="block text-sm font-semibold text-primary-text mb-3">
+              Formato de exportación
             </span>
-            <div className="flex flex-wrap gap-3">
-              {TIPOS_PARTICIPANTE.map(({ value, label }) => (
-                <label
-                  key={value}
-                  className="inline-flex items-center gap-2 rounded-full border border-primary-text/10 bg-light-ash/45 px-4 py-2 cursor-pointer text-secondary-text hover:text-primary-text"
-                >
-                  <input
-                    type="checkbox"
-                    checked={tiposSeleccionados.has(value)}
-                    onChange={() => toggleTipo(value)}
-                    className="w-4 h-4 rounded border-2 border-graphite text-charcoal-ink focus:ring-charcoal-ink"
-                  />
-                  <span>{label}</span>
-                </label>
-              ))}
+            <div className="grid gap-3 sm:grid-cols-2">
+              <label
+                className={`flex cursor-pointer items-start gap-3 rounded-2xl border p-4 transition-colors ${
+                  modo === 'reporte'
+                    ? 'border-charcoal-ink bg-blue-mist/30'
+                    : 'border-primary-text/10 bg-light-ash/35 hover:border-primary-text/20'
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="modo-exportacion"
+                  checked={modo === 'reporte'}
+                  onChange={() => setModo('reporte')}
+                  className="mt-1 w-4 h-4 border-2 border-graphite text-charcoal-ink focus:ring-charcoal-ink"
+                />
+                <span className="flex-1">
+                  <span className="block text-sm font-bold text-primary-text">Reporte completo</span>
+                  <span className="block text-xs text-secondary-text mt-1">
+                    Todos los campos del registro: email, fecha, comprobante, datos completos.
+                  </span>
+                </span>
+              </label>
+              <label
+                className={`flex cursor-pointer items-start gap-3 rounded-2xl border p-4 transition-colors ${
+                  modo === 'lista-final'
+                    ? 'border-charcoal-ink bg-blue-mist/30'
+                    : 'border-primary-text/10 bg-light-ash/35 hover:border-primary-text/20'
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="modo-exportacion"
+                  checked={modo === 'lista-final'}
+                  onChange={() => setModo('lista-final')}
+                  className="mt-1 w-4 h-4 border-2 border-graphite text-charcoal-ink focus:ring-charcoal-ink"
+                />
+                <span className="flex-1">
+                  <span className="block text-sm font-bold text-primary-text">Lista final</span>
+                  <span className="block text-xs text-secondary-text mt-1">
+                    Solo participantes con pago aprobado, agrupados por categoría y ordenados por cinta.
+                  </span>
+                </span>
+              </label>
             </div>
           </div>
 
-          <div role="group" aria-labelledby="filtro-comprobante-label">
-            <span id="filtro-comprobante-label" className="block text-sm font-semibold text-primary-text mb-3">
-              Comprobante de pago
-            </span>
-            <div className="flex flex-wrap gap-3">
-              <label className="inline-flex items-center gap-2 rounded-full border border-primary-text/10 bg-light-ash/45 px-4 py-2 cursor-pointer text-secondary-text hover:text-primary-text">
-                <input
-                  type="radio"
-                  name="filtro-comprobante"
-                  checked={filtroComprobante === 'todos'}
-                  onChange={() => setFiltroComprobante('todos')}
-                  className="w-4 h-4 border-2 border-graphite text-charcoal-ink focus:ring-charcoal-ink"
-                />
-                <span>Todos</span>
-              </label>
-              <label className="inline-flex items-center gap-2 rounded-full border border-primary-text/10 bg-light-ash/45 px-4 py-2 cursor-pointer text-secondary-text hover:text-primary-text">
-                <input
-                  type="radio"
-                  name="filtro-comprobante"
-                  checked={filtroComprobante === 'aprobados'}
-                  onChange={() => setFiltroComprobante('aprobados')}
-                  className="w-4 h-4 border-2 border-graphite text-charcoal-ink focus:ring-charcoal-ink"
-                />
-                <span>Solo con comprobante aprobado</span>
-              </label>
-              <label className="inline-flex items-center gap-2 rounded-full border border-primary-text/10 bg-light-ash/45 px-4 py-2 cursor-pointer text-secondary-text hover:text-primary-text">
-                <input
-                  type="radio"
-                  name="filtro-comprobante"
-                  checked={filtroComprobante === 'pendientes'}
-                  onChange={() => setFiltroComprobante('pendientes')}
-                  className="w-4 h-4 border-2 border-graphite text-charcoal-ink focus:ring-charcoal-ink"
-                />
-                <span>Solo pendientes de aprobación</span>
-              </label>
-            </div>
-          </div>
+          {modo === 'reporte' && (
+            <>
+              <div role="group" aria-labelledby="filtro-tipo-label">
+                <span id="filtro-tipo-label" className="block text-sm font-semibold text-primary-text mb-3">
+                  Tipo de participante
+                </span>
+                <div className="flex flex-wrap gap-3">
+                  {TIPOS_PARTICIPANTE.map(({ value, label }) => (
+                    <label
+                      key={value}
+                      className="inline-flex items-center gap-2 rounded-full border border-primary-text/10 bg-light-ash/45 px-4 py-2 cursor-pointer text-secondary-text hover:text-primary-text"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={tiposSeleccionados.has(value)}
+                        onChange={() => toggleTipo(value)}
+                        className="w-4 h-4 rounded border-2 border-graphite text-charcoal-ink focus:ring-charcoal-ink"
+                      />
+                      <span>{label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div role="group" aria-labelledby="filtro-comprobante-label">
+                <span id="filtro-comprobante-label" className="block text-sm font-semibold text-primary-text mb-3">
+                  Comprobante de pago
+                </span>
+                <div className="flex flex-wrap gap-3">
+                  <label className="inline-flex items-center gap-2 rounded-full border border-primary-text/10 bg-light-ash/45 px-4 py-2 cursor-pointer text-secondary-text hover:text-primary-text">
+                    <input
+                      type="radio"
+                      name="filtro-comprobante"
+                      checked={filtroComprobante === 'todos'}
+                      onChange={() => setFiltroComprobante('todos')}
+                      className="w-4 h-4 border-2 border-graphite text-charcoal-ink focus:ring-charcoal-ink"
+                    />
+                    <span>Todos</span>
+                  </label>
+                  <label className="inline-flex items-center gap-2 rounded-full border border-primary-text/10 bg-light-ash/45 px-4 py-2 cursor-pointer text-secondary-text hover:text-primary-text">
+                    <input
+                      type="radio"
+                      name="filtro-comprobante"
+                      checked={filtroComprobante === 'aprobados'}
+                      onChange={() => setFiltroComprobante('aprobados')}
+                      className="w-4 h-4 border-2 border-graphite text-charcoal-ink focus:ring-charcoal-ink"
+                    />
+                    <span>Solo con comprobante aprobado</span>
+                  </label>
+                  <label className="inline-flex items-center gap-2 rounded-full border border-primary-text/10 bg-light-ash/45 px-4 py-2 cursor-pointer text-secondary-text hover:text-primary-text">
+                    <input
+                      type="radio"
+                      name="filtro-comprobante"
+                      checked={filtroComprobante === 'pendientes'}
+                      onChange={() => setFiltroComprobante('pendientes')}
+                      className="w-4 h-4 border-2 border-graphite text-charcoal-ink focus:ring-charcoal-ink"
+                    />
+                    <span>Solo pendientes de aprobación</span>
+                  </label>
+                </div>
+              </div>
+            </>
+          )}
 
           <p className="text-sm text-secondary-text">
-            <strong className="text-primary-text">{participantesFiltrados.length}</strong> participante
-            {participantesFiltrados.length !== 1 ? 's' : ''} en el reporte
+            <strong className="text-primary-text">{contarParaDescarga}</strong> participante
+            {contarParaDescarga !== 1 ? 's' : ''} en la descarga
           </p>
 
           <div className="flex flex-wrap gap-3 pt-2">
             <button
               type="button"
               onClick={handleDescargar}
-              disabled={participantesFiltrados.length === 0}
+              disabled={contarParaDescarga === 0}
               className="btn-primary disabled:cursor-not-allowed disabled:opacity-50"
             >
               Descargar CSV
