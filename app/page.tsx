@@ -11,7 +11,6 @@ import Modal from './components/Modal'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import RegistroCerrado from './components/RegistroCerrado'
-import ListaParticipantes from './components/ListaParticipantes'
 import { REGISTRO_ABIERTO } from './lib/registroConfig'
 
 const CARDS_DATA: { tipo: TipoRegistro; title: string; description: string }[] = [
@@ -71,7 +70,6 @@ export default function Home() {
         <main className="flex-1 px-4 py-10 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto space-y-10">
             <RegistroCerrado variant="home" />
-            <ListaParticipantes />
           </div>
         </main>
         <Footer />
@@ -135,8 +133,6 @@ export default function Home() {
               onVolver={() => setVista('principal')}
             />
           )}
-
-          <ListaParticipantes />
         </div>
       </main>
 
