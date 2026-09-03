@@ -11,28 +11,28 @@ const ESTILOS_CATEGORIAS: {
   badge: string
 }[] = [
   {
-    header: 'bg-charcoal-ink text-soft-white',
-    badge: 'bg-white/10 border-white/15 text-blue-mist',
+    header: 'bg-light-ash text-charcoal-ink',
+    badge: 'bg-charcoal-ink/8 border-charcoal-ink/15 text-charcoal-ink/80',
   },
   {
-    header: 'bg-judogi-red text-soft-white',
-    badge: 'bg-white/10 border-white/15 text-warm-white/80',
+    header: 'bg-light-ash text-charcoal-ink',
+    badge: 'bg-charcoal-ink/8 border-charcoal-ink/15 text-charcoal-ink/80',
   },
   {
-    header: 'bg-indigo-dye text-soft-white',
-    badge: 'bg-white/10 border-white/15 text-blue-mist/90',
+    header: 'bg-light-ash text-charcoal-ink',
+    badge: 'bg-charcoal-ink/8 border-charcoal-ink/15 text-charcoal-ink/80',
   },
   {
-    header: 'bg-matcha-tea text-soft-white',
-    badge: 'bg-white/10 border-white/15 text-warm-white/80',
+    header: 'bg-light-ash text-charcoal-ink',
+    badge: 'bg-charcoal-ink/8 border-charcoal-ink/15 text-charcoal-ink/80',
   },
   {
-    header: 'bg-gold-hue text-charcoal-ink',
-    badge: 'bg-charcoal-ink/10 border-charcoal-ink/15 text-charcoal-ink/70',
+    header: 'bg-light-ash text-charcoal-ink',
+    badge: 'bg-charcoal-ink/8 border-charcoal-ink/15 text-charcoal-ink/80',
   },
   {
-    header: 'bg-steel-gray text-soft-white',
-    badge: 'bg-white/10 border-white/15 text-blue-mist/90',
+    header: 'bg-light-ash text-charcoal-ink',
+    badge: 'bg-charcoal-ink/8 border-charcoal-ink/15 text-charcoal-ink/80',
   },
 ]
 

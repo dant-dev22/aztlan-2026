@@ -146,7 +146,7 @@ export default function ListaParticipantes() {
         <div className="surface-muted overflow-hidden rounded-2xl border border-primary-text/8">
           <div className="max-h-[600px] overflow-y-auto">
             <table className="w-full">
-              <thead className="sticky top-0 bg-charcoal-ink text-soft-white">
+              <thead className="sticky top-0 bg-light-ash text-charcoal-ink">
                 <tr>
                   <th className="px-4 py-3 text-left text-sm font-semibold">#</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold">Nombre</th>
