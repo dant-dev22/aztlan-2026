@@ -11,7 +11,7 @@ import Modal from './components/Modal'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import RegistroCerrado from './components/RegistroCerrado'
-import { REGISTRO_ABIERTO } from './lib/registroConfig'
+import { REGISTRO_ABIERTO, LISTA_FINAL_PUBLICA } from './lib/registroConfig'
 
 const CARDS_DATA: { tipo: TipoRegistro; title: string; description: string }[] = [
   { tipo: 'juvenil', title: 'Registro Infantil y Juvenil', description: 'Para participantes infantiles y juveniles (6-17 años)' },
@@ -65,7 +65,7 @@ export default function Home() {
       <div className="page-shell min-h-screen flex flex-col">
         <Header navLinks={[
           { href: '/reglamento', label: 'Reglamento' },
-          { href: '/lista-final', label: 'Lista final' },
+          ...(LISTA_FINAL_PUBLICA ? [{ href: '/lista-final', label: 'Lista final' }] : []),
         ]} />
         <main className="flex-1 px-4 py-10 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto space-y-10">
@@ -81,7 +81,7 @@ export default function Home() {
     <div className="page-shell min-h-screen flex flex-col">
       <Header navLinks={[
         { href: '/reglamento', label: 'Reglamento' },
-        { href: '/lista-final', label: 'Lista final' },
+        ...(LISTA_FINAL_PUBLICA ? [{ href: '/lista-final', label: 'Lista final' }] : []),
       ]} />
 
       <main className="flex-1 px-4 py-10 sm:px-6 lg:px-8">

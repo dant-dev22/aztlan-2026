@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { LISTA_FINAL_PUBLICA } from '../lib/registroConfig'
 
 export default function Footer() {
   return (
@@ -17,16 +18,20 @@ export default function Footer() {
               </svg>
               Reglamento
             </Link>
-            <span className="hidden sm:inline h-4 w-px bg-primary-text/20" aria-hidden="true" />
-            <Link
-              href="/lista-final"
-              className="inline-flex items-center gap-2 text-sm text-secondary-text underline-offset-2 transition-colors hover:text-primary-text hover:underline"
-            >
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-              </svg>
-              Lista final
-            </Link>
+            {LISTA_FINAL_PUBLICA && (
+              <>
+                <span className="hidden sm:inline h-4 w-px bg-primary-text/20" aria-hidden="true" />
+                <Link
+                  href="/lista-final"
+                  className="inline-flex items-center gap-2 text-sm text-secondary-text underline-offset-2 transition-colors hover:text-primary-text hover:underline"
+                >
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                  </svg>
+                  Lista final
+                </Link>
+              </>
+            )}
           </nav>
 
           <div className="w-full border-t border-primary-text/8 py-2" aria-hidden="true" />

@@ -1,10 +1,12 @@
 'use client'
 
 import { useMemo, useState, useEffect } from 'react'
+import Link from 'next/link'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { useUsers } from '../hooks/useUsers'
 import { buildListaFinal, type CategoriaListaFinal } from '../lib/listaFinal'
+import { LISTA_FINAL_PUBLICA } from '../lib/registroConfig'
 
 const ESTILOS_CATEGORIAS: {
   header: string
@@ -58,6 +60,42 @@ export default function ListaFinalPage() {
     () => categorias.reduce((sum, cat) => sum + cat.participantes.length, 0),
     [categorias]
   )
+
+  if (!LISTA_FINAL_PUBLICA) {
+    return (
+      <div className="page-shell min-h-screen flex flex-col bg-warm-white/95">
+        <Header showBackButton backHref="/" navLinks={[
+          { href: '/reglamento', label: 'Reglamento' },
+        ]} />
+        <main className="flex-1 px-4 py-10 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto">
+            <section className="surface-panel overflow-hidden p-6 text-center sm:p-10">
+              <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-full bg-light-ash/60 text-muted-text shadow-[0_10px_20px_rgba(11,18,32,0.08)]" aria-hidden>
+                <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                  />
+                </svg>
+              </div>
+              <h1 className="mb-4 text-2xl font-black tracking-tight text-primary-text sm:text-3xl">
+                Lista final no disponible
+              </h1>
+              <p className="text-base sm:text-lg text-secondary-text leading-relaxed mb-8">
+                La lista final de participantes no es pública en este momento. Para novedades y comunicados oficiales, sigue las redes del torneo.
+              </p>
+              <Link href="/" className="btn-primary inline-flex">
+                Volver al inicio
+              </Link>
+            </section>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    )
+  }
 
   return (
     <div className="page-shell min-h-screen flex flex-col bg-warm-white/95">
